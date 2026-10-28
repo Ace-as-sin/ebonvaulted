@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="border-t border-line bg-navy-950">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:px-8">
         <div>
-          <Logo />
+          <Logo showIcon={false} />
           <p className="mt-3 max-w-xs text-sm text-muted">
             Independently built. Privacy focused.
           </p>
@@ -42,7 +42,7 @@ export function Footer() {
 
       <div className="border-t border-line">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-sm text-subtle sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <p>© {COPYRIGHT_YEAR} Ebon Vaulted. All rights reserved.</p>
+          <p>© {COPYRIGHT_YEAR} Ebon Vaults. All rights reserved.</p>
           <p>Prelaunch · Not a live storage service yet</p>
         </div>
       </div>

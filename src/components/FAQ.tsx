@@ -8,24 +8,24 @@ interface FaqItem {
 
 const FAQS: FaqItem[] = [
   {
-    question: 'When will Ebon Vaulted launch?',
+    question: 'When will Ebon Vaults launch?',
     answer:
-      'Ebon Vaulted is in prelaunch. We have not purchased or deployed production servers yet. Timing depends on infrastructure setup, security design, and demand from this waitlist. Waitlist members will hear from us as milestones approach — we will not invent a launch date before we can stand behind it.',
+      'Ebon Vaults is in prelaunch. We have not purchased or deployed production servers yet. Timing depends on infrastructure setup, security design, and demand from this waitlist. Waitlist members will hear from us as milestones approach — we will not invent a launch date before we can stand behind it.',
   },
   {
-    question: 'How will Ebon Vaulted protect my files?',
+    question: 'How will Ebon Vaults protect my files?',
     answer:
       'Protecting stored files is a core design goal. Encryption and access controls are planned as foundational parts of the product. Specific mechanisms, key management details, and verification status will be documented as those systems are designed and tested. We will not claim guarantees we have not yet implemented.',
   },
   {
-    question: 'Will Ebon Vaulted use my files to train AI?',
+    question: 'Will Ebon Vaults use my files to train AI?',
     answer:
-      'No. Customer files will not be used to train AI models. That commitment is part of why Ebon Vaulted is being built.',
+      'No. Customer files will not be used to train AI models. That commitment is part of why Ebon Vaults is being built.',
   },
   {
     question: 'Where will my files be stored?',
     answer:
-      'Ebon Vaulted intends to store customer data on independently operated physical server infrastructure rather than relying on third-party cloud storage providers. Exact locations and operational details will be published before launch once infrastructure decisions are finalized.',
+      'Ebon Vaults intends to store customer data on independently operated physical server infrastructure rather than relying on third-party cloud storage providers. Exact locations and operational details will be published before launch once infrastructure decisions are finalized.',
   },
   {
     question: 'Can I access my files from my phone?',

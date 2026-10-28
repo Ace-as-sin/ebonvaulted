@@ -16,7 +16,6 @@ export function VaultIllustration() {
       >
         <title>Illustration of encrypted files secured in a vault</title>
 
-        {/* Outer frame */}
         <rect
           x="48"
           y="56"
@@ -37,7 +36,6 @@ export function VaultIllustration() {
           stroke="rgba(148,163,184,0.12)"
         />
 
-        {/* Header bar */}
         <rect x="88" y="96" width="244" height="36" rx="10" fill="#121f38" />
         <circle cx="108" cy="114" r="5" fill="#2dd4bf" opacity="0.85" />
         <rect
@@ -49,7 +47,6 @@ export function VaultIllustration() {
           fill="rgba(148,163,184,0.25)"
         />
 
-        {/* File cards */}
         <g>
           <rect
             x="96"
@@ -152,7 +149,6 @@ export function VaultIllustration() {
           />
         </g>
 
-        {/* Lock badge */}
         <g transform="translate(300 118)">
           <circle
             cx="28"
@@ -181,7 +177,6 @@ export function VaultIllustration() {
           <circle cx="28" cy="33" r="2" fill="#2dd4bf" />
         </g>
 
-        {/* Soft glow orbs */}
         <circle cx="90" cy="340" r="40" fill="rgba(45,212,191,0.08)" />
         <circle cx="340" cy="80" r="50" fill="rgba(59,130,246,0.08)" />
 

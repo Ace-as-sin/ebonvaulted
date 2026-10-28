@@ -28,7 +28,7 @@ export function PrivacyPolicy() {
             Overview
           </h2>
           <p className="mt-2">
-            Ebon Vaulted is a prelaunch privacy-focused cloud storage project.
+            Ebon Vaults is a prelaunch privacy-focused cloud storage project.
             This website exists to collect early-access waitlist interest. We
             do not operate a production file-storage service at this time.
           </p>
@@ -117,7 +117,7 @@ export function PrivacyPolicy() {
             Changes
           </h2>
           <p className="mt-2">
-            This policy may be updated as Ebon Vaulted moves from prelaunch toward
+            This policy may be updated as Ebon Vaults moves from prelaunch toward
             a live service. Material changes affecting waitlist members will be
             reflected on this page.
           </p>

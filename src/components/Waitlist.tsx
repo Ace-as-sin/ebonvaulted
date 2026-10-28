@@ -277,7 +277,7 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                       className="mt-0.5 h-4 w-4 rounded border-line bg-navy-950 text-teal-500 focus:ring-teal-400/40"
                     />
                     <span>
-                      I agree to receive launch-related emails from Ebon Vaulted
+                      I agree to receive launch-related emails from Ebon Vaults
                       about early access and product updates.{' '}
                       <span className="text-teal-400">*</span>
                     </span>

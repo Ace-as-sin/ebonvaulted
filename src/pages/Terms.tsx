@@ -29,7 +29,7 @@ export function Terms() {
           </h2>
           <p className="mt-2">
             These terms apply to this prelaunch marketing and waitlist website
-            for Ebon Vaulted. They do not govern a live cloud storage product —
+            for Ebon Vaults. They do not govern a live cloud storage product —
             that product is not available yet.
           </p>
         </section>
@@ -77,7 +77,7 @@ export function Terms() {
           </h2>
           <p className="mt-2">
             This website is provided as-is for informational and waitlist
-            purposes. Ebon Vaulted does not warrant uninterrupted availability of
+            purposes. Ebon Vaults does not warrant uninterrupted availability of
             the site or a specific launch date for the storage product.
           </p>
         </section>

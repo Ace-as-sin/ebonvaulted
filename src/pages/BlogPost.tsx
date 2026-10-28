@@ -162,11 +162,11 @@ export function BlogPost() {
                 id="how-ebon-protects-heading"
                 className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl"
               >
-                How Ebon Vaulted protects against that
+                How Ebon Vaults protects against that
               </h2>
             </div>
             <div className="mt-5">
-              <ParagraphList paragraphs={post.howEbonVaultedProtects} />
+              <ParagraphList paragraphs={post.howEbonVaultsProtects} />
             </div>
           </section>
         </div>
@@ -176,7 +176,7 @@ export function BlogPost() {
             Want storage that stays storage?
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            Ebon Vaulted will not monetize, train on, give away, or use customer
+            Ebon Vaults will not monetize, train on, give away, or use customer
             information. Join the early-access waitlist.
           </p>
           <Link

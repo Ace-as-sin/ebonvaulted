@@ -1,4 +1,5 @@
 import { ArrowRight, Shield } from 'lucide-react'
+import iconSrc from '../assets/EbonVaultsIcon.png'
 import { analytics } from '../lib/analytics'
 import { VaultIllustration } from './VaultIllustration'
 
@@ -9,7 +10,13 @@ export function Hero() {
       aria-labelledby="hero-heading"
     >
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-28">
+      <img
+        src={iconSrc}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 z-0 w-[min(55vw,420px)] -translate-x-[12%] translate-y-[18%] select-none opacity-[0.14] sm:w-[min(48vw,480px)] sm:opacity-[0.16] lg:w-[520px]"
+      />
+      <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-28">
         <div className="animate-fade-up text-center lg:text-left">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-white/5 px-3 py-1.5 text-xs font-medium text-teal-400 backdrop-blur-sm">
             <Shield className="h-3.5 w-3.5" aria-hidden="true" />

@@ -1,6 +1,6 @@
 import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { analytics } from '../lib/analytics'
 import { Logo } from './Logo'
 
@@ -16,6 +16,7 @@ export function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -44,6 +45,18 @@ export function Header() {
     setOpen(false)
   }
 
+  const goHomeTop = () => {
+    handleNav('logo')
+    if (location.pathname !== '/' || location.hash) {
+      navigate('/')
+      window.setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }, 0)
+      return
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <header
       className={`sticky top-0 z-50 transition-colors duration-300 ${
@@ -59,7 +72,10 @@ export function Header() {
         <Link
           to="/"
           className="rounded-md focus-visible:outline-offset-4"
-          onClick={() => handleNav('logo')}
+          onClick={(event) => {
+            event.preventDefault()
+            goHomeTop()
+          }}
         >
           <Logo />
         </Link>

@@ -1,6 +1,6 @@
-﻿# Ebon Vaulted
+﻿# Ebon Vaults
 
-Prelaunch landing page for **Ebon Vaulted** — a privacy-focused cloud storage and backup service. This site validates demand, presents test pricing, and collects an early-access waitlist. It is not a live storage product.
+Prelaunch landing page for **Ebon Vaults** — a privacy-focused cloud storage and backup service. This site validates demand, presents test pricing, and collects an early-access waitlist. It is not a live storage product.
 
 ## Stack
 
@@ -45,7 +45,7 @@ Without `VITE_WAITLIST_ENDPOINT`, the form shows a clear development-mode messag
 3. SPA routing is handled by `public/_redirects` (`/* → /index.html` with 200).
 4. Add environment variables in the Pages project settings (same `VITE_*` keys as above). Rebuild after changing them — Vite inlines env at build time.
 
-Replace `https://ebonvaulted.com` in `index.html`, `public/robots.txt`, and `public/sitemap.xml` with your real production domain when ready.
+Replace `https://ebonvaults.com` in `index.html`, `public/robots.txt`, and `public/sitemap.xml` with your real production domain when ready.
 
 ## Project layout
 

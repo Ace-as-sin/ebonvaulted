@@ -1,10 +1,10 @@
 ﻿/**
- * Ebon Vaulted blog — news brief format
+ * Ebon Vaults blog — news brief format
  * ====================================
  * Each post explains:
  *   1. whatHappened
  *   2. whyItMatters
- *   3. howEbonVaultedProtects
+ *   3. howEbonVaultsProtects
  * then lists up to 3 source articles at the bottom of the page.
  *
  * Set primary: true on ONE post — it becomes the hero on /blog.
@@ -36,7 +36,7 @@ export interface BlogPostInput {
   sources: NewsSource[]
   whatHappened: string[]
   whyItMatters: string[]
-  howEbonVaultedProtects: string[]
+  howEbonVaultsProtects: string[]
   /** Marks the hero story on /blog — only one should be true */
   primary?: boolean
   readMinutes?: number
@@ -54,7 +54,7 @@ function estimateReadMinutes(post: BlogPostInput): number {
     post.excerpt,
     ...post.whatHappened,
     ...post.whyItMatters,
-    ...post.howEbonVaultedProtects,
+    ...post.howEbonVaultsProtects,
   ]
     .join(' ')
     .split(/\s+/)
@@ -128,8 +128,8 @@ export const BLOG_POSTS: BlogPost[] = [
       'Once you are signed in, they can stitch it together: what you read, what you watch, what you search, how long you linger, what you buy next. A free account is not hospitality. It is how they convert your curiosity into a tracked customer file.',
       'And when they do not force a login, they often track you anyway — cookies, pixels, account graphs, device IDs, “personalized” search. Either you hand over your identity at the door, or they build one behind your back. That is not a fair trade for looking at a webpage.',
     ],
-    howEbonVaultedProtects: [
-      'Ebon Vaulted is being built as storage, not a surveillance tollbooth. Your files should not require becoming a marketing profile.',
+    howEbonVaultsProtects: [
+      'Ebon Vaults is being built as storage, not a surveillance tollbooth. Your files should not require becoming a marketing profile.',
       'We will not monetize customer information, train on it, give it away, or use it as a secondary product. You should not have to surrender your identity — or get quietly profiled — just to keep what is already yours.',
     ],
   }),
@@ -172,8 +172,8 @@ export const BLOG_POSTS: BlogPost[] = [
       'Your home is not offline anymore. Voice devices can capture conversations, questions, and kids’ speech patterns — then retain them longer than you expect.',
       'Once that audio leaves the room, it can be reused, retained, breached, or fed into product improvement. If deletion is optional for the company, privacy is optional for you.',
     ],
-    howEbonVaultedProtects: [
-      'Ebon Vaulted is not a microphone in your living room. We are building encrypted file storage — not a business that needs to listen to your family.',
+    howEbonVaultsProtects: [
+      'Ebon Vaults is not a microphone in your living room. We are building encrypted file storage — not a business that needs to listen to your family.',
       'We will not monetize customer information, train on it, give it away, or use it as a secondary product. If you back up personal media with us, custody means custody.',
     ],
   }),
@@ -214,8 +214,8 @@ export const BLOG_POSTS: BlogPost[] = [
       'You uploaded photos and documents to keep them safe — not to donate them as training data. When storage and AI live under one roof, “hosting” can quietly become “using.”',
       'Personal archives are gold for models: journals, scans, drafts, private media. If your vault is inventory, you are not the customer. You are the quarry.',
     ],
-    howEbonVaultedProtects: [
-      'Ebon Vaulted will not use customer files to train AI. Period.',
+    howEbonVaultsProtects: [
+      'Ebon Vaults will not use customer files to train AI. Period.',
       'We will not monetize your information, hand it to model-builders, or treat vault contents as a side hustle. Subscription storage. Not data mining.',
     ],
   }),
@@ -257,7 +257,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'One hover is nothing. A year of hovers is a dossier: what you research at 1 a.m., what you almost buy, what you are afraid to ask out loud.',
       'That measurement culture bleeds into cloud products. If a storage company also wants ads, AI, or partner data, your files stop being files and start being signals.',
     ],
-    howEbonVaultedProtects: [
+    howEbonVaultsProtects: [
       'We reject the “data as inventory” model. No ad profiles built from your vault. No monetizing customer information.',
       'This site may collect waitlist details you choose to submit. Your future stored files are not fuel for tracking empires.',
     ],
@@ -298,8 +298,8 @@ export const BLOG_POSTS: BlogPost[] = [
       'Cloud storage piles up identity docs, finances, family photos, and work archives. Attackers go where the jackpot is.',
       'Security is not only firewalls. It is also whether your provider copies, analyzes, shares, or monetizes the same data that just became a target.',
     ],
-    howEbonVaultedProtects: [
-      'Ebon Vaulted intends to run its own infrastructure and build encryption into the foundation. We are prelaunch — we will document verified practices as they are built, not invent guarantees early.',
+    howEbonVaultsProtects: [
+      'Ebon Vaults intends to run its own infrastructure and build encryption into the foundation. We are prelaunch — we will document verified practices as they are built, not invent guarantees early.',
       'We will not multiply exposure by monetizing, training on, giving away, or using customer information as a side business. Fewer secondary copies. Fewer reasons for your life to leak.',
     ],
   }),
@@ -308,7 +308,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: 'we-will-not-monetize-your-information',
     title: 'You Are Not Inventory. Stop Paying Companies That Treat You Like It.',
     excerpt:
-      'If the real product is your data, the subscription price is just cover. Here is the line Ebon Vaulted will not cross.',
+      'If the real product is your data, the subscription price is just cover. Here is the line Ebon Vaults will not cross.',
     category: 'Company principles',
     publishedAt: '2026-10-10',
     sources: [
@@ -340,7 +340,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'If you cannot tell whether a storage product lives on subscriptions — or on mining you — you cannot trust it with your life’s files.',
       'The deal should be boring: you pay for space, they hold your files, nobody sells the leftovers.',
     ],
-    howEbonVaultedProtects: [
+    howEbonVaultsProtects: [
       'We will not monetize customer information.',
       'We will not train AI on your files.',
       'We will not give your information away for someone else’s marketing or models.',

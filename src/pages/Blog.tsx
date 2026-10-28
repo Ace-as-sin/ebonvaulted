@@ -27,7 +27,7 @@ export function Blog() {
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-muted">
           Real reporting, then the part that matters: what it means for your
-          data, and how Ebon Vaulted is being built to refuse that model.
+          data, and how Ebon Vaults is being built to refuse that model.
         </p>
 
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-2">
@@ -43,7 +43,7 @@ export function Blog() {
             Prefer storage that stays storage?
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted">
-            Ebon Vaulted will not monetize, train on, give away, or use customer
+            Ebon Vaults will not monetize, train on, give away, or use customer
             information. Join the waitlist.
           </p>
           <Link

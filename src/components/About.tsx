@@ -10,7 +10,7 @@ const PILLARS = [
   {
     icon: Building2,
     title: 'Independent infrastructure',
-    body: 'Ebon Vaulted intends to operate its own physical servers. Owning the stack supports clearer accountability and transparent business practices.',
+    body: 'Ebon Vaults intends to operate its own physical servers. Owning the stack supports clearer accountability and transparent business practices.',
   },
   {
     icon: HandCoins,
@@ -35,7 +35,7 @@ export function About() {
         <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-16">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wider text-teal-400">
-              Why Ebon Vaulted?
+              Why Ebon Vaults?
             </p>
             <h2
               id="about-heading"
@@ -45,7 +45,7 @@ export function About() {
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
               Large cloud providers often bundle storage with advertising,
-              analytics, or AI pipelines. Ebon Vaulted is being built as an
+              analytics, or AI pipelines. Ebon Vaults is being built as an
               independently operated alternative focused on secure storage —
               without turning personal files into a product.
             </p>

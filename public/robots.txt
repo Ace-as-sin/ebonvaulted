@@ -1,4 +1,4 @@
 ﻿User-agent: *
 Allow: /
 
-Sitemap: https://ebonvaulted.com/sitemap.xml
+Sitemap: https://ebonvaults.com/sitemap.xml

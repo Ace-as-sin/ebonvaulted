@@ -33,7 +33,7 @@ const FEATURES: Feature[] = [
   {
     title: 'Independent Infrastructure',
     description:
-      'Planned storage on Ebon Vaulted’s own physical servers — not rented space from a third-party cloud.',
+      'Planned storage on Ebon Vaults’ own physical servers — not rented space from a third-party cloud.',
     icon: Server,
     status: 'planned',
   },
@@ -79,7 +79,7 @@ export function Features() {
             Built for control, not compromise
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted">
-            Ebon Vaulted is in prelaunch. The capabilities below describe our
+            Ebon Vaults is in prelaunch. The capabilities below describe our
             principles and planned product direction — not a live production
             service today.
           </p>
