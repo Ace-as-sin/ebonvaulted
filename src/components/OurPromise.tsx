@@ -1,4 +1,4 @@
-import { ChevronDown, Lock, Shield } from 'lucide-react'
+import { ChevronDown, Shield } from 'lucide-react'
 import { useId, useState } from 'react'
 import {
   CUSTOMER_PROMISES,
@@ -17,36 +17,15 @@ function PromiseStatement({
   const limitButtonId = `${baseId}-${promise.id}-limit-btn`
 
   return (
-    <li
-      className={`rounded-2xl border p-5 transition duration-300 sm:p-6 ${
-        promise.emphasized
-          ? 'border-teal-400/35 bg-gradient-to-br from-teal-500/12 via-charcoal-800/70 to-blue-500/8'
-          : 'border-line bg-charcoal-800/40'
-      }`}
-    >
+    <li className="rounded-2xl border border-line bg-charcoal-800/40 p-5 transition duration-300 sm:p-6">
       <div className="flex items-start gap-3">
-        <span
-          className={`mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ring-1 ${
-            promise.emphasized
-              ? 'bg-teal-400/15 text-teal-400 ring-teal-400/30'
-              : 'bg-blue-500/10 text-blue-400 ring-blue-400/20'
-          }`}
-        >
-          {promise.emphasized ? (
-            <Lock className="h-4 w-4" aria-hidden="true" />
-          ) : (
-            <Shield className="h-4 w-4" aria-hidden="true" />
-          )}
+        <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 ring-1 ring-blue-400/20">
+          <Shield className="h-4 w-4" aria-hidden="true" />
         </span>
         <div className="min-w-0 flex-1">
           <h4 className="font-display text-base font-semibold text-ink sm:text-lg">
             {promise.headline}
           </h4>
-          {promise.emphasized && (
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-teal-400">
-              Permanent commitment
-            </p>
-          )}
           <p className="mt-2 text-sm leading-relaxed text-muted">
             {promise.body}
           </p>
@@ -104,7 +83,7 @@ export function OurPromise() {
           Tired of unreadable EULAs? Try ours.
         </h3>
         <p className="mt-3 font-display text-base font-medium text-teal-400 sm:text-lg">
-          Seven promises. No surprises. Your data, protected by principles.
+          Seven promises. NO bull Sh*t. Your data protected by principles.
         </p>
         <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">
           We believe protecting your data starts with respecting you. That’s why

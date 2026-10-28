@@ -12,6 +12,9 @@ interface BlogHeroProps {
 }
 
 export function BlogHero({ post }: BlogHeroProps) {
+  const asidePull = post.whyItMatters[0]
+  const asideNote = post.whyItMatters[1] ?? post.excerpt
+
   return (
     <Link
       to={getPostPath(post.slug)}
@@ -67,14 +70,12 @@ export function BlogHero({ post }: BlogHeroProps) {
             <p className="text-xs font-semibold uppercase tracking-wider text-red-300">
               Why this leads
             </p>
-            <p className="mt-4 font-display text-2xl font-semibold leading-snug text-ink">
-              Intimate personal data used in ways customers did not realize —
-              including after they thought they had deleted it.
-            </p>
-            <p className="mt-4 text-sm leading-relaxed text-muted">
-              The most egregious example on our radar of “smart” devices turning
-              private life into retained product fuel.
-            </p>
+            {asidePull && (
+              <p className="mt-4 font-display text-2xl font-semibold leading-snug text-ink">
+                {asidePull}
+              </p>
+            )}
+            <p className="mt-4 text-sm leading-relaxed text-muted">{asideNote}</p>
           </div>
         </div>
       </div>

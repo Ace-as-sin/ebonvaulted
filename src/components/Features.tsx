@@ -7,6 +7,7 @@
   Server,
   type LucideIcon,
 } from 'lucide-react'
+import { Reveal } from './Reveal'
 
 interface Feature {
   title: string
@@ -24,11 +25,18 @@ const FEATURES: Feature[] = [
     status: 'principle',
   },
   {
+    title: 'No AI Training',
+    description:
+      'Customer files will not be used to train AI models. Your data stays yours.',
+    icon: EyeOff,
+    status: 'principle',
+  },
+  {
     title: 'Encrypted Storage',
     description:
       'Encryption designed to safeguard stored files as the platform is built and verified.',
     icon: FolderLock,
-    status: 'planned',
+    status: 'principle',
   },
   {
     title: 'Independent Infrastructure',
@@ -36,13 +44,6 @@ const FEATURES: Feature[] = [
       'Planned storage on Ebon Vaults’ own physical servers — not rented space from a third-party cloud.',
     icon: Server,
     status: 'planned',
-  },
-  {
-    title: 'No AI Training',
-    description:
-      'Customer files will not be used to train AI models. Your data stays yours.',
-    icon: EyeOff,
-    status: 'principle',
   },
   {
     title: 'Simple File Access',
@@ -68,7 +69,7 @@ export function Features() {
       aria-labelledby="features-heading"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-teal-400">
             Features
           </p>
@@ -83,14 +84,16 @@ export function Features() {
             principles and planned product direction — not a live production
             service today.
           </p>
-        </div>
+        </Reveal>
 
         <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((feature) => {
+          {FEATURES.map((feature, index) => {
             const Icon = feature.icon
             return (
-              <li
+              <Reveal
                 key={feature.title}
+                as="li"
+                delay={80 + index * 70}
                 className="group rounded-2xl border border-line bg-charcoal-800/40 p-6 transition duration-300 hover:border-teal-400/30 hover:bg-charcoal-800/70"
               >
                 <div className="flex items-start justify-between gap-3">
@@ -113,7 +116,7 @@ export function Features() {
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {feature.description}
                 </p>
-              </li>
+              </Reveal>
             )
           })}
         </ul>

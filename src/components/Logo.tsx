@@ -1,4 +1,4 @@
-﻿import iconSrc from '../assets/EbonVaultsIcon.png'
+﻿import iconSrc from '../assets/EbonVaultsIconSmall.png'
 
 interface LogoProps {
   className?: string

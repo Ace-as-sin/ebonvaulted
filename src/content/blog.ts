@@ -92,6 +92,96 @@ export function formatSourcesLabel(post: BlogPost): string {
  */
 export const BLOG_POSTS: BlogPost[] = [
   definePost({
+    slug: 'flock-cameras-keep-your-plates',
+    title: 'The State Deletes Your Plate Data in 30 Days. The Camera Company Doesn’t Have To.',
+    excerpt:
+      'Flock Safety’s license-plate cameras log where cars go. Agencies talk about short retention windows. The vendor’s own terms tell a colder story about who still gets to keep using that trail.',
+    category: 'Device surveillance',
+    publishedAt: '2026-10-28',
+    primary: true,
+    sources: [
+      {
+        outlet: 'American Civil Liberties Union',
+        headline:
+          'Municipalities: Beware of Changes in Flock’s Legal Terms if You’re Using or Considering License Plate Readers',
+        url: 'https://www.aclu.org/news/privacy-technology/tracking-alpr-cameras/flocks-terms-and-conditions',
+        publishedAt: '2026-04-01',
+      },
+      {
+        outlet: 'USA Today',
+        headline:
+          'Flock Safety changes data retention default to 7 days amid backlash',
+        url: 'https://www.usatoday.com/story/news/state/georgia/atlanta/2026/08/14/flock-safety-changes-data-retention-default-to-7-days-amid-backlash/91300697007/',
+        publishedAt: '2026-08-14',
+      },
+      {
+        outlet: '10TV / WBNS',
+        headline:
+          'Reynoldsburg covers 32 Flock cameras after ending contract; what happens to collected data',
+        url: 'https://www.10tv.com/article/news/local/reynoldsburg-covers-flock-cameras-what-happens-collected-data/530-971d2cc7-fd55-45a5-b618-3752f99461b2',
+        publishedAt: '2026-09-10',
+      },
+    ],
+    whatHappened: [
+      'Flock Safety’s automated license plate readers photograph vehicles as they pass — plate, vehicle details, time, and location — then push that trail into a searchable cloud database used by police departments, cities, and other customers across the country.',
+      'Public messaging leans on short retention: Flock long used a 30-day default, later pushed a 7-day recommendation under backlash, and some state rules (like Oregon’s) tell agencies to delete plate data unconnected to a case within about 30 days. That sounds like a sunset. It is not the whole contract.',
+      'The ACLU has flagged Flock’s updated terms for granting the company a perpetual right to use customer data to “support and improve” its services — language that can outlive a city’s relationship with the product. Local reporting has also made the blunt point that ending a Flock contract does not, by itself, erase what was already collected: data can sit for the configured retention window unless the customer demands immediate deletion.',
+    ],
+    whyItMatters: [
+      'A 30-day government retention rule is theater if the vendor’s paperwork still lets the company keep rights to your movements. “We delete it” and “the camera company is done with it” are not the same sentence.',
+      'License-plate history is a map of where you live, work, worship, seek medical care, and protest. When that map lives on a private platform with network effects across agencies, one town’s “short retention” does not undo a national surveillance product.',
+      'This is the large-company data pattern in neon: public-facing limits for the customer, durable rights for the vendor, and ordinary people stuck hoping a privacy policy meant what it sounded like.',
+    ],
+    howEbonVaultsProtects: [
+      'Ebon Vaults is not building a roadside dossier of your car. We are building encrypted file storage — custody, not a surveillance network.',
+      'We will not monetize customer information, train on it, give it away, or keep a side license to “improve our products” with your private files after you leave. If deletion and ownership mean anything, the company holding the data has to mean them too.',
+    ],
+  }),
+
+  definePost({
+    slug: 'smart-tvs-and-always-listening-devices',
+    title: 'Your Smart TVs and Alexa Hear Everything — Then Keep the Tape',
+    excerpt:
+      'Parents hit delete. The Alexa recordings stayed. Regulators say kids’ living-room audio from smart speakers and always-on devices was kept forever and used to improve the system anyway.',
+    category: 'Device surveillance',
+    publishedAt: '2026-10-28',
+    sources: [
+      {
+        outlet: 'Federal Trade Commission',
+        headline:
+          'FTC and DOJ Charge Amazon with Violating Children’s Privacy Law by Keeping Kids’ Alexa Voice Recordings Forever and Undermining Parents’ Deletion Requests',
+        url: 'https://www.ftc.gov/news-events/news/press-releases/2023/05/ftc-doj-charge-amazon-violating-childrens-privacy-law-keeping-kids-alexa-voice-recordings-forever',
+        publishedAt: '2023-05-31',
+      },
+      {
+        outlet: 'U.S. Department of Justice',
+        headline:
+          'Amazon Agrees to Injunctive Relief and $25 Million Civil Penalty for Alleged Violations of Children’s Privacy Law Relating to Alexa',
+        url: 'https://www.justice.gov/archives/opa/pr/amazon-agrees-injunctive-relief-and-25-million-civil-penalty-alleged-violations-childrens',
+        publishedAt: '2023-07-19',
+      },
+      {
+        outlet: 'Federal Trade Commission',
+        headline: 'Amazon.com (Alexa), U.S. v. — case page',
+        url: 'https://www.ftc.gov/legal-library/browse/cases-proceedings/192-3128-amazoncom-alexa-us-v',
+        publishedAt: '2023-07-21',
+      },
+    ],
+    whatHappened: [
+      'The FTC and DOJ alleged Amazon kept children’s Alexa voice recordings indefinitely, undermined deletion, and used that intimate audio to help improve its systems — while households thought “delete” meant gone.',
+      'That is the nightmare version of “smart” living rooms: microphones in private spaces, recordings on someone else’s servers, and control that turns out to be theater.',
+    ],
+    whyItMatters: [
+      'Your home is not offline anymore. Voice devices can capture conversations, questions, and kids’ speech patterns — then retain them longer than you expect.',
+      'Once that audio leaves the room, it can be reused, retained, breached, or fed into product improvement. If deletion is optional for the company, privacy is optional for you.',
+    ],
+    howEbonVaultsProtects: [
+      'Ebon Vaults is not a microphone in your living room. We are building encrypted file storage — not a business that needs to listen to your family.',
+      'We will not monetize customer information, train on it, give it away, or use it as a secondary product. If you back up personal media with us, custody means custody.',
+    ],
+  }),
+
+  definePost({
     slug: 'login-walls-steal-your-data',
     title: 'Want to Exist Online? Sign In So We Can Track You.',
     excerpt:
@@ -131,50 +221,6 @@ export const BLOG_POSTS: BlogPost[] = [
     howEbonVaultsProtects: [
       'Ebon Vaults is being built as storage, not a surveillance tollbooth. Your files should not require becoming a marketing profile.',
       'We will not monetize customer information, train on it, give it away, or use it as a secondary product. You should not have to surrender your identity — or get quietly profiled — just to keep what is already yours.',
-    ],
-  }),
-
-  definePost({
-    slug: 'smart-tvs-and-always-listening-devices',
-    title: 'Your Devices Hear Everything — Then Keep the Tape',
-    excerpt:
-      'Parents hit delete. The recordings stayed. Regulators say kids’ living-room audio was kept forever and used to improve the system anyway.',
-    category: 'Device surveillance',
-    publishedAt: '2026-10-18',
-    primary: true,
-    sources: [
-      {
-        outlet: 'Federal Trade Commission',
-        headline:
-          'FTC and DOJ Charge Amazon with Violating Children’s Privacy Law by Keeping Kids’ Alexa Voice Recordings Forever and Undermining Parents’ Deletion Requests',
-        url: 'https://www.ftc.gov/news-events/news/press-releases/2023/05/ftc-doj-charge-amazon-violating-childrens-privacy-law-keeping-kids-alexa-voice-recordings-forever',
-        publishedAt: '2023-05-31',
-      },
-      {
-        outlet: 'U.S. Department of Justice',
-        headline:
-          'Amazon Agrees to Injunctive Relief and $25 Million Civil Penalty for Alleged Violations of Children’s Privacy Law Relating to Alexa',
-        url: 'https://www.justice.gov/archives/opa/pr/amazon-agrees-injunctive-relief-and-25-million-civil-penalty-alleged-violations-childrens',
-        publishedAt: '2023-07-19',
-      },
-      {
-        outlet: 'Federal Trade Commission',
-        headline: 'Amazon.com (Alexa), U.S. v. — case page',
-        url: 'https://www.ftc.gov/legal-library/browse/cases-proceedings/192-3128-amazoncom-alexa-us-v',
-        publishedAt: '2023-07-21',
-      },
-    ],
-    whatHappened: [
-      'The FTC and DOJ alleged Amazon kept children’s Alexa voice recordings indefinitely, undermined deletion, and used that intimate audio to help improve its systems — while households thought “delete” meant gone.',
-      'That is the nightmare version of “smart” living rooms: microphones in private spaces, recordings on someone else’s servers, and control that turns out to be theater.',
-    ],
-    whyItMatters: [
-      'Your home is not offline anymore. Voice devices can capture conversations, questions, and kids’ speech patterns — then retain them longer than you expect.',
-      'Once that audio leaves the room, it can be reused, retained, breached, or fed into product improvement. If deletion is optional for the company, privacy is optional for you.',
-    ],
-    howEbonVaultsProtects: [
-      'Ebon Vaults is not a microphone in your living room. We are building encrypted file storage — not a business that needs to listen to your family.',
-      'We will not monetize customer information, train on it, give it away, or use it as a secondary product. If you back up personal media with us, custody means custody.',
     ],
   }),
 
@@ -364,9 +410,46 @@ export function getPrimaryPost(): BlogPost {
   return BLOG_POSTS.find((post) => post.primary) ?? getAllPosts()[0]!
 }
 
+/** Pin these slugs to the top of the “More…” grid (after the hero). */
+const PINNED_LIST_SLUGS = ['smart-tvs-and-always-listening-devices']
+
 export function getSecondaryPosts(): BlogPost[] {
   const primary = getPrimaryPost()
-  return getAllPosts().filter((post) => post.slug !== primary.slug)
+  return getAllPosts()
+    .filter((post) => post.slug !== primary.slug)
+    .sort((a, b) => {
+      const aPin = PINNED_LIST_SLUGS.indexOf(a.slug)
+      const bPin = PINNED_LIST_SLUGS.indexOf(b.slug)
+      if (aPin !== -1 || bPin !== -1) {
+        if (aPin === -1) return 1
+        if (bPin === -1) return -1
+        return aPin - bPin
+      }
+      return a.publishedAt < b.publishedAt ? 1 : -1
+    })
+}
+
+export function searchPosts(query: string, posts: BlogPost[] = getAllPosts()): BlogPost[] {
+  const normalized = query.trim().toLowerCase()
+  if (!normalized) return posts
+
+  const terms = normalized.split(/\s+/).filter(Boolean)
+
+  return posts.filter((post) => {
+    const haystack = [
+      post.title,
+      post.excerpt,
+      post.category,
+      ...post.whatHappened,
+      ...post.whyItMatters,
+      ...post.howEbonVaultsProtects,
+      ...post.sources.map((source) => `${source.outlet} ${source.headline}`),
+    ]
+      .join(' ')
+      .toLowerCase()
+
+    return terms.every((term) => haystack.includes(term))
+  })
 }
 
 export function formatPostDate(isoDate: string): string {

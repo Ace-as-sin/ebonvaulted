@@ -1,5 +1,6 @@
 ﻿import { Building2, Eye, HandCoins, KeyRound } from 'lucide-react'
 import { OurPromise } from './OurPromise'
+import { Reveal } from './Reveal'
 
 const PILLARS = [
   {
@@ -33,7 +34,7 @@ export function About() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-16">
-          <div>
+          <Reveal>
             <p className="text-sm font-semibold uppercase tracking-wider text-teal-400">
               Why Ebon Vaults?
             </p>
@@ -55,14 +56,16 @@ export function About() {
               refine pricing, and gather feedback from people who care about
               private, encrypted storage.
             </p>
-          </div>
+          </Reveal>
 
           <ul className="grid gap-4 sm:grid-cols-2">
-            {PILLARS.map((pillar) => {
+            {PILLARS.map((pillar, index) => {
               const Icon = pillar.icon
               return (
-                <li
+                <Reveal
                   key={pillar.title}
+                  as="li"
+                  delay={100 + index * 80}
                   className="rounded-2xl border border-line bg-charcoal-800/40 p-5"
                 >
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 ring-1 ring-blue-400/20">
@@ -74,13 +77,15 @@ export function About() {
                   <p className="mt-2 text-sm leading-relaxed text-muted">
                     {pillar.body}
                   </p>
-                </li>
+                </Reveal>
               )
             })}
           </ul>
         </div>
 
-        <OurPromise />
+        <Reveal delay={120} variant="fade">
+          <OurPromise />
+        </Reveal>
       </div>
     </section>
   )
