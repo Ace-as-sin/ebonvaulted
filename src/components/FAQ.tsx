@@ -1,6 +1,7 @@
 ﻿import { ChevronDown } from 'lucide-react'
 import { useId, useState } from 'react'
 import { Reveal } from './Reveal'
+import { OwnershipVisual } from './SecurityVisual'
 
 interface FaqItem {
   question: string
@@ -234,26 +235,34 @@ export function FAQ() {
       aria-labelledby="faq-heading"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-teal-400">
-            FAQ
-          </p>
-          <h2
-            id="faq-heading"
-            className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
-          >
-            Your Data. Your Rights. Straight Answers.
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-muted">
-            Privacy shouldn&apos;t require reading 40 pages of legal agreements.
-            Here&apos;s what you deserve to know about how we protect your
-            information.
-          </p>
-        </Reveal>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <Reveal>
+            <p className="text-sm font-semibold uppercase tracking-wider text-teal-400">
+              FAQ
+            </p>
+            <h2
+              id="faq-heading"
+              className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+            >
+              Your Data. Your Rights. Straight Answers.
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted">
+              Privacy shouldn&apos;t require reading 40 pages of legal
+              agreements. Here&apos;s what you deserve to know about how we
+              protect your information.
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-subtle">
+              Straight answers on ownership, encryption, government requests,
+              and what happens when hardware fails.
+            </p>
+          </Reveal>
+
+          <OwnershipVisual />
+        </div>
 
         <Reveal
-          delay={120}
-          className="mx-auto mt-12 max-w-3xl rounded-2xl border border-line bg-charcoal-800/40 px-5 sm:px-8"
+          delay={140}
+          className="mx-auto mt-14 max-w-3xl rounded-2xl border border-line bg-charcoal-800/40 px-5 sm:px-8"
         >
           {FAQS.map((item, index) => (
             <FaqAccordionItem

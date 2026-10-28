@@ -109,6 +109,44 @@
     animation: float 6s ease-in-out infinite;
   }
 
+  .animate-float-slow {
+    animation: float 7.5s ease-in-out infinite;
+  }
+
+  .animate-pulse-soft {
+    animation: pulse-soft 2.4s ease-in-out infinite;
+  }
+
+  .animate-ring-pulse {
+    transform-box: view-box;
+    transform-origin: 80px 89px;
+    animation: ring-pulse 2.8s ease-in-out infinite;
+  }
+
+  .animate-lock-shackle {
+    transform-box: view-box;
+    transform-origin: 80px 56px;
+    animation: lock-shackle 3.2s ease-in-out infinite;
+  }
+
+  .animate-vault-dial {
+    transform-box: view-box;
+    transform-origin: 80px 86px;
+    animation: vault-dial 8s linear infinite;
+  }
+
+  .animate-shield-breathe {
+    transform-box: view-box;
+    transform-origin: 80px 89px;
+    animation: shield-breathe 3.6s ease-in-out infinite;
+  }
+
+  .animate-check-draw {
+    stroke-dasharray: 72;
+    stroke-dashoffset: 0;
+    animation: check-draw 3.6s ease-in-out infinite;
+  }
+
   /* Scroll-triggered reveals (toggled via .reveal-visible) */
   .reveal {
     opacity: 0;
@@ -163,5 +201,78 @@
   }
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes ring-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes lock-shackle {
+  0%,
+  70%,
+  100% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(-3px);
+  }
+  90% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes vault-dial {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shield-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes check-draw {
+  0%,
+  15% {
+    stroke-dashoffset: 72;
+    opacity: 0.35;
+  }
+  35%,
+  70% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  85%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.85;
   }
 }

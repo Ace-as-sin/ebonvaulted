@@ -8,6 +8,7 @@
   type LucideIcon,
 } from 'lucide-react'
 import { Reveal } from './Reveal'
+import { EncryptionVisual } from './SecurityVisual'
 
 interface Feature {
   title: string
@@ -69,22 +70,30 @@ export function Features() {
       aria-labelledby="features-heading"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-teal-400">
-            Features
-          </p>
-          <h2
-            id="features-heading"
-            className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
-          >
-            Built for control, not compromise
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-muted">
-            Ebon Vaults is in prelaunch. The capabilities below describe our
-            principles and planned product direction — not a live production
-            service today.
-          </p>
-        </Reveal>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <Reveal>
+            <p className="text-sm font-semibold uppercase tracking-wider text-teal-400">
+              Features
+            </p>
+            <h2
+              id="features-heading"
+              className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+            >
+              Built for control, not compromise
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted">
+              Ebon Vaults is in prelaunch. The capabilities below describe our
+              principles and planned product direction — not a live production
+              service today.
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-subtle">
+              Encryption first. Customer-controlled keys. Storage that stays
+              storage — not a pipeline for ads or AI training.
+            </p>
+          </Reveal>
+
+          <EncryptionVisual />
+        </div>
 
         <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((feature, index) => {

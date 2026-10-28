@@ -1,6 +1,7 @@
 ﻿import { Building2, Eye, HandCoins, KeyRound } from 'lucide-react'
 import { OurPromise } from './OurPromise'
 import { Reveal } from './Reveal'
+import { VaultVisual } from './SecurityVisual'
 
 const PILLARS = [
   {
@@ -33,8 +34,10 @@ export function About() {
       aria-labelledby="about-heading"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-16">
-          <Reveal>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <VaultVisual />
+
+          <Reveal delay={100}>
             <p className="text-sm font-semibold uppercase tracking-wider text-teal-400">
               Why Ebon Vaults?
             </p>
@@ -57,31 +60,31 @@ export function About() {
               private, encrypted storage.
             </p>
           </Reveal>
-
-          <ul className="grid gap-4 sm:grid-cols-2">
-            {PILLARS.map((pillar, index) => {
-              const Icon = pillar.icon
-              return (
-                <Reveal
-                  key={pillar.title}
-                  as="li"
-                  delay={100 + index * 80}
-                  className="rounded-2xl border border-line bg-charcoal-800/40 p-5"
-                >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 ring-1 ring-blue-400/20">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-4 font-display text-base font-semibold text-ink">
-                    {pillar.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
-                    {pillar.body}
-                  </p>
-                </Reveal>
-              )
-            })}
-          </ul>
         </div>
+
+        <ul className="mt-14 grid gap-4 sm:grid-cols-2">
+          {PILLARS.map((pillar, index) => {
+            const Icon = pillar.icon
+            return (
+              <Reveal
+                key={pillar.title}
+                as="li"
+                delay={100 + index * 80}
+                className="rounded-2xl border border-line bg-charcoal-800/40 p-5"
+              >
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 ring-1 ring-blue-400/20">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <h3 className="mt-4 font-display text-base font-semibold text-ink">
+                  {pillar.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {pillar.body}
+                </p>
+              </Reveal>
+            )
+          })}
+        </ul>
 
         <Reveal delay={120} variant="fade">
           <OurPromise />
