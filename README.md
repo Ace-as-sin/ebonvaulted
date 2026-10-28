@@ -20,11 +20,15 @@ Copy `.env.example` to `.env` and configure:
 
 | Variable | Purpose |
 | --- | --- |
-| `VITE_WAITLIST_ENDPOINT` | `POST` URL for waitlist submissions (required for real signups) |
+| `VITE_API_URL` | Waitlist API base URL (e.g. `http://127.0.0.1:8787` or `https://api.ebonvaults.com`) |
 | `VITE_ANALYTICS_ENABLED` | Set `true` to emit analytics events |
 | `VITE_ANALYTICS_ENDPOINT` | Optional `POST` URL for analytics payloads |
 
-Without `VITE_WAITLIST_ENDPOINT`, the form shows a clear development-mode message and does **not** pretend the signup succeeded.
+Without `VITE_API_URL`, the form does **not** pretend a signup succeeded.
+
+### Self-hosted waitlist API
+
+The Node/Fastify/SQLite backend lives in [`server/`](./server/). Emails are encrypted at rest (AES-256-GCM); the process binds to `127.0.0.1` by default. See [`server/README.md`](./server/README.md) and [`server/docs/DEPLOYMENT-WINDOWS.md`](./server/docs/DEPLOYMENT-WINDOWS.md).
 
 ## Scripts
 
@@ -50,9 +54,6 @@ Replace `https://ebonvaults.com` in `index.html`, `public/robots.txt`, and `publ
 ## Project layout
 
 ```
-src/
-  components/   Header, Hero, Features, Pricing, About, Waitlist, FAQ, Footer
-  pages/        Home, PrivacyPolicy, Terms
-  lib/          analytics, waitlist, plans
-  types/        shared TypeScript types
+src/            React landing site
+server/         Self-hosted waitlist API + local admin CLI
 ```

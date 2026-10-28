@@ -12,6 +12,26 @@ dist
 dist-ssr
 *.local
 
+# Env / secrets (never commit keys)
+.env
+.env.*
+!.env.example
+server/.env
+server/.env.*
+!server/.env.example
+
+# Waitlist database, backups, CSV exports, local keys
+server/data/*.db
+server/data/*.db-*
+server/backups/
+server/exports/
+*.db
+*.db-shm
+*.db-wal
+**/secrets/
+**/ebonvaults-secrets/
+**/ebonvaults-data/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

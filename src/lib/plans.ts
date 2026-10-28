@@ -56,3 +56,20 @@ export const INTENDED_USE_OPTIONS = [
   { value: 'business', label: 'Business documents' },
   { value: 'other', label: 'Other' },
 ] as const
+
+export const PRIVACY_FEATURE_OPTIONS = [
+  { value: 'encryption', label: 'Encrypted storage' },
+  { value: 'no_ai_training', label: 'No AI training on my files' },
+  { value: 'no_data_sale', label: 'Never sell my data' },
+  {
+    value: 'independent_infrastructure',
+    label: 'Independent infrastructure',
+  },
+  {
+    value: 'customer_controlled_keys',
+    label: 'Customer-controlled encryption keys',
+  },
+  { value: 'other', label: 'Other' },
+] as const
+
+export const CONSENT_POLICY_VERSION = 'waitlist-v1'

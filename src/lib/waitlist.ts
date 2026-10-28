@@ -1,11 +1,26 @@
+import { CONSENT_POLICY_VERSION } from './plans'
 import type { WaitlistFormData, WaitlistPayload, WaitlistResult } from '../types'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+/**
+ * API base URL, e.g. http://127.0.0.1:8787 or https://api.ebonvaults.com
+ * Falls back to legacy VITE_WAITLIST_ENDPOINT if it already includes the full path.
+ */
+export function getApiBaseUrl(): string | undefined {
+  const base = (import.meta.env.VITE_API_URL as string | undefined)?.trim()
+  if (base) return base.replace(/\/$/, '')
+  return undefined
+}
+
 export function getWaitlistEndpoint(): string | undefined {
-  const endpoint = import.meta.env.VITE_WAITLIST_ENDPOINT as string | undefined
-  if (!endpoint || !endpoint.trim()) return undefined
-  return endpoint.trim()
+  const base = getApiBaseUrl()
+  if (base) return `${base}/api/waitlist`
+
+  const legacy = (import.meta.env.VITE_WAITLIST_ENDPOINT as string | undefined)
+    ?.trim()
+  if (legacy) return legacy
+  return undefined
 }
 
 export function validateWaitlistForm(
@@ -25,6 +40,10 @@ export function validateWaitlistForm(
 
   if (!data.intendedUse) {
     errors.intendedUse = 'Select your primary intended use.'
+  }
+
+  if (!data.privacyFeature) {
+    errors.privacyFeature = 'Select the privacy feature that matters most.'
   }
 
   if (!data.consent) {
@@ -48,7 +67,7 @@ export async function submitWaitlist(
       ok: false,
       code: 'not_configured',
       error:
-        'Waitlist endpoint is not configured. Set VITE_WAITLIST_ENDPOINT to enable submissions.',
+        'Waitlist API is not configured. Set VITE_API_URL to enable submissions.',
     }
   }
 
@@ -57,7 +76,8 @@ export async function submitWaitlist(
     return {
       ok: false,
       code: 'validation',
-      error: Object.values(fieldErrors)[0] ?? 'Please check the form and try again.',
+      error:
+        Object.values(fieldErrors)[0] ?? 'Please check the form and try again.',
     }
   }
 
@@ -65,9 +85,10 @@ export async function submitWaitlist(
     email: data.email.trim().toLowerCase(),
     plan: data.plan,
     intendedUse: data.intendedUse,
+    privacyFeature: data.privacyFeature,
     feedback: data.feedback.trim() || undefined,
-    source: typeof window !== 'undefined' ? window.location.href : undefined,
-    submittedAt: new Date().toISOString(),
+    consent: true,
+    consentPolicyVersion: CONSENT_POLICY_VERSION,
   }
 
   try {
@@ -81,11 +102,31 @@ export async function submitWaitlist(
     })
 
     if (!response.ok) {
+      let message =
+        'We could not confirm your signup. Your submission was not saved — please try again.'
+      try {
+        const body = (await response.json()) as { error?: string }
+        if (body.error) message = body.error
+      } catch {
+        // keep default message
+      }
+      return {
+        ok: false,
+        code: 'server',
+        error: message,
+      }
+    }
+
+    const body = (await response.json().catch(() => null)) as {
+      ok?: boolean
+    } | null
+
+    if (!body || body.ok !== true) {
       return {
         ok: false,
         code: 'server',
         error:
-          'We could not complete your signup right now. Please try again in a moment.',
+          'We could not confirm your signup. Your submission was not saved — please try again.',
       }
     }
 
@@ -93,9 +134,9 @@ export async function submitWaitlist(
   } catch {
     return {
       ok: false,
-      code: 'network',
+      code: 'offline',
       error:
-        'Network error. Check your connection and try again.',
+        'The signup service is unreachable right now. Your submission was not confirmed — check your connection and try again.',
     }
   }
 }

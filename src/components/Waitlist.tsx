@@ -1,9 +1,18 @@
 ﻿import { CheckCircle2, Loader2 } from 'lucide-react'
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { analytics } from '../lib/analytics'
-import { INTENDED_USE_OPTIONS, PLAN_LABELS } from '../lib/plans'
+import {
+  INTENDED_USE_OPTIONS,
+  PLAN_LABELS,
+  PRIVACY_FEATURE_OPTIONS,
+} from '../lib/plans'
 import { getWaitlistEndpoint, submitWaitlist, validateWaitlistForm } from '../lib/waitlist'
-import type { IntendedUse, StoragePlan, WaitlistFormData } from '../types'
+import type {
+  IntendedUse,
+  PrivacyFeature,
+  StoragePlan,
+  WaitlistFormData,
+} from '../types'
 
 interface WaitlistProps {
   selectedPlan: StoragePlan
@@ -14,6 +23,7 @@ const INITIAL: WaitlistFormData = {
   email: '',
   plan: 'plus',
   intendedUse: 'personal',
+  privacyFeature: 'encryption',
   feedback: '',
   consent: false,
 }
@@ -23,6 +33,7 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
   const [form, setForm] = useState<Omit<WaitlistFormData, 'plan'>>({
     email: INITIAL.email,
     intendedUse: INITIAL.intendedUse,
+    privacyFeature: INITIAL.privacyFeature,
     feedback: INITIAL.feedback,
     consent: INITIAL.consent,
   })
@@ -68,7 +79,7 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
     if (!getWaitlistEndpoint()) {
       setStatus('error')
       setMessage(
-        'Development mode: VITE_WAITLIST_ENDPOINT is not configured. Submissions are disabled until a backend endpoint is set.',
+        'Signup is temporarily unavailable: the waitlist API is not configured. Your submission was not saved.',
       )
       analytics.track('waitlist_submit_error', {
         plan: selectedPlan,
@@ -244,10 +255,53 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
 
                 <div>
                   <label
+                    htmlFor={`${formId}-privacyFeature`}
+                    className="block text-sm font-medium text-ink"
+                  >
+                    Most important privacy feature{' '}
+                    <span className="text-teal-400">*</span>
+                  </label>
+                  <select
+                    id={`${formId}-privacyFeature`}
+                    name="privacyFeature"
+                    value={form.privacyFeature}
+                    onChange={(e) =>
+                      update(
+                        'privacyFeature',
+                        e.target.value as PrivacyFeature,
+                      )
+                    }
+                    aria-invalid={Boolean(errors.privacyFeature)}
+                    aria-describedby={
+                      errors.privacyFeature
+                        ? `${formId}-privacyFeature-error`
+                        : undefined
+                    }
+                    className="mt-2 w-full rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
+                  >
+                    {PRIVACY_FEATURE_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.privacyFeature && (
+                    <p
+                      id={`${formId}-privacyFeature-error`}
+                      className="mt-1.5 text-sm text-red-400"
+                      role="alert"
+                    >
+                      {errors.privacyFeature}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
                     htmlFor={`${formId}-feedback`}
                     className="block text-sm font-medium text-ink"
                   >
-                    What matters most to you?{' '}
+                    Anything else we should know?{' '}
                     <span className="font-normal text-subtle">(optional)</span>
                   </label>
                   <textarea
@@ -258,7 +312,7 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                     value={form.feedback}
                     onChange={(e) => update('feedback', e.target.value)}
                     className="mt-2 w-full resize-y rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink placeholder:text-subtle transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
-                    placeholder="Privacy, price, storage size, sharing, mobile access…"
+                    placeholder="Price, storage size, sharing, mobile access…"
                   />
                 </div>
 
