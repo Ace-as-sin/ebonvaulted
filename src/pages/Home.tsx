@@ -24,13 +24,13 @@ export function Home() {
   return (
     <>
       <Hero />
-      <Features />
       <Pricing onSelectPlan={selectPlanAndScroll} />
-      <About />
       <Waitlist
         selectedPlan={selectedPlan}
         onPlanChange={setSelectedPlan}
       />
+      <Features />
+      <About />
       <FAQ />
     </>
   )

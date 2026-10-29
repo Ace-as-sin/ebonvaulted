@@ -5,8 +5,9 @@ import { analytics } from '../lib/analytics'
 import { Logo } from './Logo'
 
 const NAV_LINKS = [
-  { href: '/#features', label: 'Features', id: 'features' },
   { href: '/#pricing', label: 'Pricing', id: 'pricing' },
+  { href: '/#waitlist', label: 'Waitlist', id: 'waitlist' },
+  { href: '/#features', label: 'Features', id: 'features' },
   { href: '/#about', label: 'About', id: 'about' },
   { href: '/blog', label: 'Blog', id: 'blog' },
   { href: '/#faq', label: 'FAQ', id: 'faq' },
