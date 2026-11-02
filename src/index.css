@@ -1,8 +1,12 @@
+@import '@fontsource-variable/dm-sans/wght.css';
+@import '@fontsource/outfit/latin-500.css';
+@import '@fontsource/outfit/latin-600.css';
+@import '@fontsource/outfit/latin-700.css';
 @import 'tailwindcss';
 
 @theme {
   --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'DM Sans Variable', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 
   --color-navy-950: #060a12;
   --color-navy-900: #0a1220;
