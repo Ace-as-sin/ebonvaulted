@@ -68,12 +68,12 @@ export function BlogHero({ post }: BlogHeroProps) {
               Why this leads
             </p>
             <p className="mt-4 font-display text-2xl font-semibold leading-snug text-ink">
-              Intimate personal data used in ways customers did not realize —
-              including after they thought they had deleted it.
+              {post.heroLead ??
+                'Intimate personal data used in ways customers did not realize — including after they thought they had deleted it.'}
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted">
-              The most egregious example on our radar of “smart” devices turning
-              private life into retained product fuel.
+              {post.heroSupport ??
+                'A privacy story that shows why architecture and honest disclosures matter more than slogans.'}
             </p>
           </div>
         </div>

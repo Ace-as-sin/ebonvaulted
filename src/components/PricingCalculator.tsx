@@ -144,23 +144,26 @@ export function PricingCalculator({ onJoinWaitlist }: PricingCalculatorProps) {
           </div>
         </div>
 
-        <div className="mx-auto mt-12 max-w-2xl rounded-3xl border border-teal-400/25 bg-gradient-to-br from-teal-500/10 via-charcoal-800/70 to-blue-500/10 px-6 py-10 text-center sm:px-10">
-          <h3 className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+        <div className="mt-14 rounded-3xl border-2 border-teal-400/40 bg-gradient-to-br from-teal-500/15 via-charcoal-800/80 to-blue-500/15 px-6 py-12 text-center shadow-2xl shadow-teal-500/15 sm:px-12 sm:py-16">
+          <p className="text-sm font-semibold uppercase tracking-wider text-teal-400">
+            Next step
+          </p>
+          <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl lg:text-5xl">
             Find your space. Join the waitlist.
           </h3>
-          <p className="mx-auto mt-3 max-w-lg text-base leading-relaxed text-muted">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
             Explore your storage options today. Be among the first to know when
             Ebon Vaults launches.
           </p>
           <button
             type="button"
             onClick={handleJoinWaitlist}
-            className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3.5 text-sm font-semibold text-navy-950 shadow-lg shadow-teal-500/20 transition hover:brightness-110"
+            className="mt-8 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-4 text-base font-semibold text-navy-950 shadow-lg shadow-teal-500/30 transition hover:brightness-110 sm:w-auto sm:min-w-[280px] sm:px-10 sm:py-4 sm:text-lg"
           >
             Join the Waitlist
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            <ArrowRight className="h-5 w-5" aria-hidden="true" />
           </button>
-          <p className="mt-3 text-xs text-subtle">
+          <p className="mt-4 text-sm text-subtle">
             We’ll preselect the closest fixed plan preference from your estimate.
             No payment is collected today.
           </p>

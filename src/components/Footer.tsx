@@ -22,6 +22,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link to="/security" className="transition hover:text-ink">
+                Our Security
+              </Link>
+            </li>
+            <li>
               <Link to="/blog" className="transition hover:text-ink">
                 Blog
               </Link>

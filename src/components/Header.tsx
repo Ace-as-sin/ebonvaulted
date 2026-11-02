@@ -5,13 +5,16 @@ import { analytics } from '../lib/analytics'
 import { Logo } from './Logo'
 
 const NAV_LINKS = [
-  { href: '/#features', label: 'Features', id: 'features' },
-  { href: '/#pricing', label: 'Pricing', id: 'pricing' },
-  { href: '/pricing-calculator', label: 'Calculator', id: 'calculator' },
-  { href: '/#about', label: 'About', id: 'about' },
+  { href: '/', label: 'Home', id: 'home' },
+  { href: '/pricing-calculator', label: 'Pricing', id: 'pricing' },
+  { href: '/security', label: 'Our Security', id: 'security' },
   { href: '/blog', label: 'Blog', id: 'blog' },
-  { href: '/#faq', label: 'FAQ', id: 'faq' },
 ] as const
+
+function isNavActive(pathname: string, href: string) {
+  if (href === '/') return pathname === '/'
+  return pathname === href || pathname.startsWith(`${href}/`)
+}
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -96,7 +99,7 @@ export function Header() {
                 <Link
                   to={link.href}
                   className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-white/5 hover:text-ink ${
-                    location.pathname.startsWith(link.href)
+                    isNavActive(location.pathname, link.href)
                       ? 'text-ink'
                       : 'text-muted'
                   }`}

@@ -6,6 +6,7 @@ import { BlogPost } from './pages/BlogPost'
 import { Home } from './pages/Home'
 import { PricingCalculatorPage } from './pages/PricingCalculatorPage'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
+import { SecurityPage } from './pages/SecurityPage'
 import { ServerStatusPage } from './pages/ServerStatusPage'
 import { Terms } from './pages/Terms'
 
@@ -17,6 +18,7 @@ function AppRoutes() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="pricing-calculator" element={<PricingCalculatorPage />} />
+        <Route path="security" element={<SecurityPage />} />
         <Route path="server-status" element={<ServerStatusPage />} />
         <Route path="status" element={<Navigate to="/server-status" replace />} />
         <Route path="blog" element={<Blog />} />
