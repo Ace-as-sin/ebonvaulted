@@ -1,8 +1,12 @@
+@import '@fontsource-variable/dm-sans/wght.css';
+@import '@fontsource/outfit/latin-500.css';
+@import '@fontsource/outfit/latin-600.css';
+@import '@fontsource/outfit/latin-700.css';
 @import 'tailwindcss';
 
 @theme {
   --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'DM Sans Variable', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 
   --color-navy-950: #060a12;
   --color-navy-900: #0a1220;
@@ -25,14 +29,22 @@
 
   --color-ink: #f4f7fb;
   --color-muted: #94a3b8;
-  --color-subtle: #64748b;
+  /* Light enough for WCAG AA on navy/charcoal backgrounds (was #64748b). */
+  --color-subtle: #8b9cb3;
   --color-line: rgba(148, 163, 184, 0.16);
   --color-line-strong: rgba(148, 163, 184, 0.28);
 }
 
 @layer base {
+  :root {
+    /* Always use our dark palette — ignore OS light/dark flips for UA chrome. */
+    color-scheme: dark only;
+  }
+
   html {
     scroll-behavior: smooth;
+    color-scheme: dark only;
+    background-color: var(--color-navy-950);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -108,70 +120,6 @@
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
-
-  .animate-float-slow {
-    animation: float 7.5s ease-in-out infinite;
-  }
-
-  .animate-pulse-soft {
-    animation: pulse-soft 2.4s ease-in-out infinite;
-  }
-
-  .animate-ring-pulse {
-    transform-box: view-box;
-    transform-origin: 80px 89px;
-    animation: ring-pulse 2.8s ease-in-out infinite;
-  }
-
-  .animate-lock-shackle {
-    transform-box: view-box;
-    transform-origin: 80px 56px;
-    animation: lock-shackle 3.2s ease-in-out infinite;
-  }
-
-  .animate-vault-dial {
-    transform-box: view-box;
-    transform-origin: 80px 86px;
-    animation: vault-dial 8s linear infinite;
-  }
-
-  .animate-shield-breathe {
-    transform-box: view-box;
-    transform-origin: 80px 89px;
-    animation: shield-breathe 3.6s ease-in-out infinite;
-  }
-
-  .animate-check-draw {
-    stroke-dasharray: 72;
-    stroke-dashoffset: 0;
-    animation: check-draw 3.6s ease-in-out infinite;
-  }
-
-  /* Scroll-triggered reveals (toggled via .reveal-visible) */
-  .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition:
-      opacity 0.7s ease-out,
-      transform 0.7s ease-out;
-    will-change: opacity, transform;
-  }
-
-  .reveal-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .reveal-fade {
-    opacity: 0;
-    transform: none;
-    transition: opacity 0.65s ease-out;
-    will-change: opacity;
-  }
-
-  .reveal-fade.reveal-visible {
-    opacity: 1;
-  }
 }
 
 @keyframes fade-up {
@@ -204,75 +152,112 @@
   }
 }
 
-@keyframes pulse-soft {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(1);
+@keyframes cta-light-sweep {
+  0% {
+    background-position: 0% 45%;
   }
-  50% {
-    opacity: 1;
-    transform: scale(1.15);
+  100% {
+    background-position: 100% 55%;
   }
 }
 
-@keyframes ring-pulse {
-  0%,
-  100% {
-    opacity: 0.35;
+/* Join Early Access / waitlist CTAs — keyboard-style light sweep */
+.btn-cta {
+  --cta-delay: 0s;
+  color: #fff;
+  /* Few wide stops = soft blend; alternate drift avoids loop snap */
+  background-image: linear-gradient(
+    118deg,
+    #0d9488,
+    #14b8a6,
+    #2dd4bf,
+    #3b82f6,
+    #2563eb
+  );
+  background-size: 280% 280%;
+  background-position: 0% 45%;
+  animation: cta-light-sweep 7.2s ease-in-out infinite alternate;
+  animation-delay: var(--cta-delay);
+  box-shadow: 0 8px 20px -6px rgba(20, 184, 166, 0.28);
+  transition:
+    box-shadow 0.35s ease,
+    filter 0.35s ease;
+}
+
+.btn-cta:hover {
+  box-shadow:
+    0 0 10px rgba(45, 212, 191, 0.35),
+    0 0 18px rgba(59, 130, 246, 0.18),
+    0 8px 20px -6px rgba(20, 184, 166, 0.28);
+  filter: brightness(1.04);
+}
+
+.btn-cta:disabled {
+  animation: none;
+  filter: none;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta {
+    animation: none;
+    background-image: linear-gradient(118deg, #14b8a6, #3b82f6);
+    background-size: 100% 100%;
   }
-  50% {
-    opacity: 0.9;
+
+  .btn-cta:hover {
+    filter: brightness(1.06);
   }
 }
 
-@keyframes lock-shackle {
-  0%,
-  70%,
-  100% {
-    transform: translateY(0);
-  }
-  80% {
-    transform: translateY(-3px);
-  }
-  90% {
-    transform: translateY(0);
-  }
+/* Accessible range input for the pricing calculator */
+.storage-slider {
+  height: 1.5rem;
 }
 
-@keyframes vault-dial {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.storage-slider:focus {
+  outline: none;
 }
 
-@keyframes shield-breathe {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.04);
-  }
+.storage-slider:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.35);
 }
 
-@keyframes check-draw {
-  0%,
-  15% {
-    stroke-dashoffset: 72;
-    opacity: 0.35;
-  }
-  35%,
-  70% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  85%,
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 0.85;
-  }
+.storage-slider:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.35);
+}
+
+.storage-slider::-webkit-slider-runnable-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.16);
+}
+
+.storage-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: -0.375rem;
+  border-radius: 9999px;
+  border: 2px solid #0a1220;
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.35);
+  cursor: pointer;
+}
+
+.storage-slider::-moz-range-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.16);
+}
+
+.storage-slider::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  border: 2px solid #0a1220;
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.35);
+  cursor: pointer;
 }

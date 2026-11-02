@@ -2,16 +2,20 @@ import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 import { Logo } from './Logo'
 
 const NAV_LINKS = [
-  { href: '/#pricing', label: 'Pricing', id: 'pricing' },
-  { href: '/#waitlist', label: 'Waitlist', id: 'waitlist' },
-  { href: '/#features', label: 'Features', id: 'features' },
-  { href: '/#about', label: 'About', id: 'about' },
+  { href: '/', label: 'Home', id: 'home' },
+  { href: '/pricing-calculator', label: 'Pricing', id: 'pricing' },
+  { href: '/security', label: 'Our Security', id: 'security' },
   { href: '/blog', label: 'Blog', id: 'blog' },
-  { href: '/#faq', label: 'FAQ', id: 'faq' },
 ] as const
+
+function isNavActive(pathname: string, href: string) {
+  if (href === '/') return pathname === '/'
+  return pathname === href || pathname.startsWith(`${href}/`)
+}
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -96,7 +100,7 @@ export function Header() {
                 <Link
                   to={link.href}
                   className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-white/5 hover:text-ink ${
-                    location.pathname.startsWith(link.href)
+                    isNavActive(location.pathname, link.href)
                       ? 'text-ink'
                       : 'text-muted'
                   }`}
@@ -112,7 +116,8 @@ export function Header() {
         <div className="hidden md:block">
           <a
             href="/#waitlist"
-            className="inline-flex items-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-4 py-2 text-sm font-semibold text-navy-950 shadow-lg shadow-teal-500/20 transition hover:brightness-110"
+            className="btn-cta inline-flex items-center rounded-xl px-4 py-2 text-sm font-semibold"
+            style={ctaDelayStyle('header')}
             onClick={() => {
               handleNav('waitlist')
               analytics.track('cta_click', {
@@ -168,7 +173,8 @@ export function Header() {
           <li className="pt-2">
             <a
               href="/#waitlist"
-              className="flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-4 py-3 text-sm font-semibold text-navy-950"
+              className="btn-cta flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold"
+              style={ctaDelayStyle('header_mobile')}
               onClick={() => {
                 handleNav('waitlist')
                 analytics.track('cta_click', {

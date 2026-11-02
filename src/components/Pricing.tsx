@@ -1,15 +1,25 @@
 import { Check } from 'lucide-react'
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
+import { formatCurrency } from '../lib/pricing'
+import { PRICING_CONFIG, PRICING_DISCLAIMER } from '../lib/pricingConfig'
 import { PRICING_PLANS } from '../lib/plans'
 import type { StoragePlan } from '../types'
 
 interface PricingProps {
   onSelectPlan: (plan: StoragePlan) => void
+  /** Show a link to the dedicated calculator page (default true). */
+  showCalculatorLink?: boolean
 }
 
-export function Pricing({ onSelectPlan }: PricingProps) {
+export function Pricing({
+  onSelectPlan,
+  showCalculatorLink = true,
+}: PricingProps) {
   const sectionRef = useRef<HTMLElement>(null)
+  const usage = PRICING_CONFIG.usage
 
   useEffect(() => {
     const el = sectionRef.current
@@ -60,23 +70,24 @@ export function Pricing({ onSelectPlan }: PricingProps) {
             Simple plans. Clear prices.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted">
-            Initial test pricing for early interest. Select a plan to join the
-            waitlist — no payment required today.
+            Choose a fixed capacity plan or pay for the space storage you
+            actually use. Select an option to join the waitlist — no payment
+            required today.
           </p>
         </div>
 
-        <ul className="mt-14 grid gap-6 lg:grid-cols-3">
+        <ul className="mt-14 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {PRICING_PLANS.map((plan) => (
             <li
               key={plan.id}
               className={`relative flex flex-col rounded-2xl border p-6 transition duration-300 sm:p-8 ${
                 plan.highlighted
-                  ? 'border-teal-400/40 bg-gradient-to-b from-teal-400/10 via-charcoal-800/80 to-charcoal-800/60 shadow-xl shadow-teal-500/10 lg:-translate-y-2'
+                  ? 'border-teal-400/40 bg-gradient-to-b from-teal-400/10 via-charcoal-800/80 to-charcoal-800/60 shadow-xl shadow-teal-500/10'
                   : 'border-line bg-charcoal-800/40 hover:border-line-strong'
               }`}
             >
               {plan.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-teal-500 to-blue-500 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-navy-950">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-teal-500 to-blue-500 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
                   {plan.badge}
                 </span>
               )}
@@ -114,24 +125,111 @@ export function Pricing({ onSelectPlan }: PricingProps) {
 
               <button
                 type="button"
-                className={`mt-8 w-full rounded-xl px-4 py-3 text-sm font-semibold transition ${
-                  plan.highlighted
-                    ? 'bg-gradient-to-r from-teal-500 to-blue-500 text-navy-950 shadow-lg shadow-teal-500/20 hover:brightness-110'
-                    : 'border border-line-strong bg-white/5 text-ink hover:border-teal-400/40 hover:bg-white/8'
-                }`}
+                className="btn-cta mt-8 w-full rounded-xl px-4 py-3 text-sm font-semibold"
+                style={ctaDelayStyle(plan.id)}
                 onClick={() => handleSelect(plan.id)}
               >
                 Join Waitlist
               </button>
             </li>
           ))}
+
+          <li className="relative flex flex-col rounded-2xl border border-blue-400/35 bg-gradient-to-b from-blue-500/10 via-charcoal-800/80 to-charcoal-800/60 p-6 transition duration-300 sm:p-8">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-blue-400/40 bg-navy-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-blue-400">
+              Flexible
+            </span>
+
+            <div>
+              <h3 className="font-display text-xl font-semibold text-ink">
+                Pay for What You Use
+              </h3>
+              <p className="mt-2 text-sm text-muted">
+                Metered space storage billed on what you consume, with a monthly
+                minimum.
+              </p>
+              <p className="mt-6 flex items-baseline gap-1">
+                <span className="font-display text-4xl font-semibold tracking-tight text-ink">
+                  {formatCurrency(usage.pricePerGbMonth)}
+                </span>
+                <span className="text-sm text-subtle">/GB /month</span>
+              </p>
+              <p className="mt-1 text-sm font-medium text-blue-400">
+                Min. {formatCurrency(usage.minimumMonthlyCharge)}/month
+              </p>
+            </div>
+
+            <ul className="mt-6 flex flex-1 flex-col gap-3">
+              {[
+                'Pay only for consumed storage',
+                `Up to ${usage.maxStorageGb.toLocaleString('en-US')} GB in this estimate`,
+                'Compare with fixed plans in the calculator',
+              ].map((feature) => (
+                <li
+                  key={feature}
+                  className="flex items-start gap-2.5 text-sm text-muted"
+                >
+                  <Check
+                    className="mt-0.5 h-4 w-4 shrink-0 text-blue-400"
+                    aria-hidden="true"
+                  />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            {showCalculatorLink ? (
+              <Link
+                to="/pricing-calculator"
+                className="mt-8 block w-full rounded-xl border border-blue-400/40 bg-blue-500/10 px-4 py-3 text-center text-sm font-semibold text-ink transition hover:border-blue-400/60 hover:bg-blue-500/15"
+                onClick={() => {
+                  analytics.track('cta_click', {
+                    id: 'pricing_usage_calculator',
+                    location: 'pricing',
+                  })
+                }}
+              >
+                Estimate your price
+              </Link>
+            ) : (
+              <a
+                href="#pricing-calculator"
+                className="mt-8 block w-full rounded-xl border border-blue-400/40 bg-blue-500/10 px-4 py-3 text-center text-sm font-semibold text-ink transition hover:border-blue-400/60 hover:bg-blue-500/15"
+                onClick={() => {
+                  analytics.track('cta_click', {
+                    id: 'pricing_usage_calculator',
+                    location: 'pricing',
+                  })
+                }}
+              >
+                Estimate your price
+              </a>
+            )}
+          </li>
         </ul>
 
         <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-subtle">
-          Pricing is preliminary and subject to change before launch. The
-          “Most Popular” label highlights a recommended starting point for
-          testing interest — it does not reflect current sales or adoption.
+          Fixed-plan prices are preliminary test pricing. Usage rates are
+          illustrative and pending confirmation. The “Most Popular” label
+          highlights a recommended starting point for testing interest — it does
+          not reflect current sales or adoption. {PRICING_DISCLAIMER}
         </p>
+
+        {showCalculatorLink && (
+          <p className="mx-auto mt-4 text-center">
+            <Link
+              to="/pricing-calculator"
+              className="text-sm font-semibold text-teal-400 transition hover:text-teal-300"
+              onClick={() => {
+                analytics.track('cta_click', {
+                  id: 'pricing_open_calculator',
+                  location: 'pricing',
+                })
+              }}
+            >
+              Open the pricing calculator →
+            </Link>
+          </p>
+        )}
       </div>
     </section>
   )

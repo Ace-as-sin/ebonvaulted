@@ -11,6 +11,15 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
+server/data/
+server/.env
+server/.env.*
+!server/.env.example
+server/backups/
+server/waitlist-export-*.csv
 
 # Env / secrets (never commit keys)
 .env

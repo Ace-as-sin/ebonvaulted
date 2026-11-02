@@ -38,7 +38,7 @@ function PromiseStatement({
                 aria-expanded={limitOpen}
                 aria-controls={limitPanelId}
                 onClick={() => setLimitOpen((v) => !v)}
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-subtle transition hover:text-teal-400"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition hover:text-teal-400"
               >
                 Understand the limitations
                 <ChevronDown

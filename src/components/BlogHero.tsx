@@ -12,9 +12,6 @@ interface BlogHeroProps {
 }
 
 export function BlogHero({ post }: BlogHeroProps) {
-  const asidePull = post.whyItMatters[0]
-  const asideNote = post.whyItMatters[1] ?? post.excerpt
-
   return (
     <Link
       to={getPostPath(post.slug)}
@@ -70,12 +67,14 @@ export function BlogHero({ post }: BlogHeroProps) {
             <p className="text-xs font-semibold uppercase tracking-wider text-red-300">
               Why this leads
             </p>
-            {asidePull && (
-              <p className="mt-4 font-display text-2xl font-semibold leading-snug text-ink">
-                {asidePull}
-              </p>
-            )}
-            <p className="mt-4 text-sm leading-relaxed text-muted">{asideNote}</p>
+            <p className="mt-4 font-display text-2xl font-semibold leading-snug text-ink">
+              {post.heroLead ??
+                'Intimate personal data used in ways customers did not realize — including after they thought they had deleted it.'}
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-muted">
+              {post.heroSupport ??
+                'A privacy story that shows why architecture and honest disclosures matter more than slogans.'}
+            </p>
           </div>
         </div>
       </div>

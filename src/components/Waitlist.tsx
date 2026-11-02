@@ -1,18 +1,10 @@
 ﻿import { CheckCircle2, Loader2 } from 'lucide-react'
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { analytics } from '../lib/analytics'
-import {
-  INTENDED_USE_OPTIONS,
-  PLAN_LABELS,
-  PRIVACY_FEATURE_OPTIONS,
-} from '../lib/plans'
+import { INTENDED_USE_OPTIONS, PLAN_LABELS } from '../lib/plans'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 import { getWaitlistEndpoint, submitWaitlist, validateWaitlistForm } from '../lib/waitlist'
-import type {
-  IntendedUse,
-  PrivacyFeature,
-  StoragePlan,
-  WaitlistFormData,
-} from '../types'
+import type { IntendedUse, StoragePlan, WaitlistFormData } from '../types'
 
 interface WaitlistProps {
   selectedPlan: StoragePlan
@@ -23,7 +15,6 @@ const INITIAL: WaitlistFormData = {
   email: '',
   plan: 'plus',
   intendedUse: 'personal',
-  privacyFeature: 'encryption',
   feedback: '',
   consent: false,
 }
@@ -33,7 +24,6 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
   const [form, setForm] = useState<Omit<WaitlistFormData, 'plan'>>({
     email: INITIAL.email,
     intendedUse: INITIAL.intendedUse,
-    privacyFeature: INITIAL.privacyFeature,
     feedback: INITIAL.feedback,
     consent: INITIAL.consent,
   })
@@ -79,7 +69,7 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
     if (!getWaitlistEndpoint()) {
       setStatus('error')
       setMessage(
-        'Signup is temporarily unavailable: the waitlist API is not configured. Your submission was not saved.',
+        'Development mode: VITE_WAITLIST_ENDPOINT is not configured. Submissions are disabled until a backend endpoint is set.',
       )
       analytics.track('waitlist_submit_error', {
         plan: selectedPlan,
@@ -255,53 +245,10 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
 
                 <div>
                   <label
-                    htmlFor={`${formId}-privacyFeature`}
-                    className="block text-sm font-medium text-ink"
-                  >
-                    Most important privacy feature{' '}
-                    <span className="text-teal-400">*</span>
-                  </label>
-                  <select
-                    id={`${formId}-privacyFeature`}
-                    name="privacyFeature"
-                    value={form.privacyFeature}
-                    onChange={(e) =>
-                      update(
-                        'privacyFeature',
-                        e.target.value as PrivacyFeature,
-                      )
-                    }
-                    aria-invalid={Boolean(errors.privacyFeature)}
-                    aria-describedby={
-                      errors.privacyFeature
-                        ? `${formId}-privacyFeature-error`
-                        : undefined
-                    }
-                    className="mt-2 w-full rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
-                  >
-                    {PRIVACY_FEATURE_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.privacyFeature && (
-                    <p
-                      id={`${formId}-privacyFeature-error`}
-                      className="mt-1.5 text-sm text-red-400"
-                      role="alert"
-                    >
-                      {errors.privacyFeature}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <label
                     htmlFor={`${formId}-feedback`}
                     className="block text-sm font-medium text-ink"
                   >
-                    Anything else we should know?{' '}
+                    What matters most to you?{' '}
                     <span className="font-normal text-subtle">(optional)</span>
                   </label>
                   <textarea
@@ -312,7 +259,7 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                     value={form.feedback}
                     onChange={(e) => update('feedback', e.target.value)}
                     className="mt-2 w-full resize-y rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink placeholder:text-subtle transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
-                    placeholder="Price, storage size, sharing, mobile access…"
+                    placeholder="Privacy, price, storage size, sharing, mobile access…"
                   />
                 </div>
 
@@ -359,7 +306,8 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3.5 text-sm font-semibold text-navy-950 shadow-lg shadow-teal-500/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="btn-cta inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-70"
+                  style={ctaDelayStyle('waitlist-submit')}
                 >
                   {status === 'loading' ? (
                     <>
