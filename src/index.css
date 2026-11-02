@@ -25,7 +25,8 @@
 
   --color-ink: #f4f7fb;
   --color-muted: #94a3b8;
-  --color-subtle: #64748b;
+  /* Light enough for WCAG AA on navy/charcoal backgrounds (was #64748b). */
+  --color-subtle: #8b9cb3;
   --color-line: rgba(148, 163, 184, 0.16);
   --color-line-strong: rgba(148, 163, 184, 0.28);
 }

@@ -115,7 +115,7 @@ export function Header() {
         <div className="hidden md:block">
           <a
             href="/#waitlist"
-            className="inline-flex items-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-4 py-2 text-sm font-semibold text-navy-950 shadow-lg shadow-teal-500/20 transition hover:brightness-110"
+            className="inline-flex items-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-teal-500/20 transition hover:brightness-110"
             onClick={() => {
               handleNav('waitlist')
               analytics.track('cta_click', {
@@ -171,7 +171,7 @@ export function Header() {
           <li className="pt-2">
             <a
               href="/#waitlist"
-              className="flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-4 py-3 text-sm font-semibold text-navy-950"
+              className="flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-4 py-3 text-sm font-semibold text-white"
               onClick={() => {
                 handleNav('waitlist')
                 analytics.track('cta_click', {

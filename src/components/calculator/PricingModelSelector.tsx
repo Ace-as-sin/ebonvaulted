@@ -98,7 +98,7 @@ export function PricingModelSelector({
                 onClick={() => onBillingPeriodChange(option.id)}
                 className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
                   selected
-                    ? 'bg-gradient-to-r from-teal-500 to-blue-500 text-navy-950'
+                    ? 'bg-gradient-to-r from-teal-500 to-blue-500 text-white'
                     : 'text-muted hover:text-ink'
                 }`}
               >

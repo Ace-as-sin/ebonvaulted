@@ -158,7 +158,7 @@ export function PricingCalculator({ onJoinWaitlist }: PricingCalculatorProps) {
           <button
             type="button"
             onClick={handleJoinWaitlist}
-            className="mt-8 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-4 text-base font-semibold text-navy-950 shadow-lg shadow-teal-500/30 transition hover:brightness-110 sm:w-auto sm:min-w-[280px] sm:px-10 sm:py-4 sm:text-lg"
+            className="mt-8 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-teal-500/30 transition hover:brightness-110 sm:w-auto sm:min-w-[280px] sm:px-10 sm:py-4 sm:text-lg"
           >
             Join the Waitlist
             <ArrowRight className="h-5 w-5" aria-hidden="true" />

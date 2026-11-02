@@ -86,7 +86,7 @@ export function Pricing({
               }`}
             >
               {plan.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-teal-500 to-blue-500 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-navy-950">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-teal-500 to-blue-500 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
                   {plan.badge}
                 </span>
               )}
@@ -126,7 +126,7 @@ export function Pricing({
                 type="button"
                 className={`mt-8 w-full rounded-xl px-4 py-3 text-sm font-semibold transition ${
                   plan.highlighted
-                    ? 'bg-gradient-to-r from-teal-500 to-blue-500 text-navy-950 shadow-lg shadow-teal-500/20 hover:brightness-110'
+                    ? 'bg-gradient-to-r from-teal-500 to-blue-500 text-white shadow-lg shadow-teal-500/20 hover:brightness-110'
                     : 'border border-line-strong bg-white/5 text-ink hover:border-teal-400/40 hover:bg-white/8'
                 }`}
                 onClick={() => handleSelect(plan.id)}

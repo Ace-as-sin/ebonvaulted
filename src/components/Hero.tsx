@@ -1,5 +1,5 @@
 import { ArrowRight, Shield } from 'lucide-react'
-import iconSrc from '../assets/EbonVaultsIcon.png'
+import iconHeroSrc from '../assets/EbonVaultsIcon-hero.webp'
 import { analytics } from '../lib/analytics'
 import { VaultIllustration } from './VaultIllustration'
 
@@ -11,8 +11,12 @@ export function Hero() {
     >
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" />
       <img
-        src={iconSrc}
+        src={iconHeroSrc}
         alt=""
+        width={1040}
+        height={693}
+        decoding="async"
+        fetchPriority="low"
         aria-hidden="true"
         className="pointer-events-none absolute bottom-0 left-0 z-0 w-[min(55vw,420px)] -translate-x-[12%] translate-y-[18%] select-none opacity-[0.14] sm:w-[min(48vw,480px)] sm:opacity-[0.16] lg:w-[520px]"
       />
@@ -40,7 +44,7 @@ export function Hero() {
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
             <a
               href="#waitlist"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3.5 text-sm font-semibold text-navy-950 shadow-lg shadow-teal-500/25 transition hover:brightness-110 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-500/25 transition hover:brightness-110 sm:w-auto"
               onClick={() =>
                 analytics.track('cta_click', {
                   id: 'join_early_access',

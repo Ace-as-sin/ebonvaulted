@@ -1,4 +1,4 @@
-﻿import iconSrc from '../assets/EbonVaultsIcon.png'
+﻿import iconMarkSrc from '../assets/EbonVaultsIcon-mark.webp'
 
 interface LogoProps {
   className?: string
@@ -19,10 +19,11 @@ export function Logo({
     >
       {showIcon && (
         <img
-          src={iconSrc}
+          src={iconMarkSrc}
           alt=""
           width={32}
           height={32}
+          decoding="async"
           className="h-8 w-8 shrink-0 rounded-lg object-cover"
           aria-hidden="true"
         />

@@ -1,4 +1,4 @@
-﻿import { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { BlogCard } from '../components/BlogCard'
 import { BlogHero } from '../components/BlogHero'
@@ -48,7 +48,7 @@ export function Blog() {
           </p>
           <Link
             to="/#waitlist"
-            className="mt-6 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3 text-sm font-semibold text-navy-950 shadow-lg shadow-teal-500/20 transition hover:brightness-110"
+            className="mt-6 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-500/20 transition hover:brightness-110"
             onClick={() =>
               analytics.track('cta_click', {
                 id: 'join_waitlist',
