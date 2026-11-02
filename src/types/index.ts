@@ -6,19 +6,10 @@ export type IntendedUse =
   | 'business'
   | 'other'
 
-export type PrivacyFeature =
-  | 'encryption'
-  | 'no_ai_training'
-  | 'no_data_sale'
-  | 'independent_infrastructure'
-  | 'customer_controlled_keys'
-  | 'other'
-
 export interface WaitlistFormData {
   email: string
   plan: StoragePlan
   intendedUse: IntendedUse
-  privacyFeature: PrivacyFeature
   feedback: string
   consent: boolean
 }
@@ -27,19 +18,14 @@ export interface WaitlistPayload {
   email: string
   plan: StoragePlan
   intendedUse: IntendedUse
-  privacyFeature: PrivacyFeature
   feedback?: string
-  consent: true
-  consentPolicyVersion: string
+  source?: string
+  submittedAt: string
 }
 
 export type WaitlistResult =
   | { ok: true }
-  | {
-      ok: false
-      error: string
-      code: 'not_configured' | 'network' | 'server' | 'validation' | 'offline'
-    }
+  | { ok: false; error: string; code: 'not_configured' | 'network' | 'server' | 'validation' }
 
 export interface PricingPlan {
   id: StoragePlan
