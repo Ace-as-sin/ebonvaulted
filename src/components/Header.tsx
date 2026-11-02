@@ -2,6 +2,7 @@ import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 import { Logo } from './Logo'
 
 const NAV_LINKS = [
@@ -115,7 +116,8 @@ export function Header() {
         <div className="hidden md:block">
           <a
             href="/#waitlist"
-            className="inline-flex items-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-teal-500/20 transition hover:brightness-110"
+            className="btn-cta inline-flex items-center rounded-xl px-4 py-2 text-sm font-semibold"
+            style={ctaDelayStyle('header')}
             onClick={() => {
               handleNav('waitlist')
               analytics.track('cta_click', {
@@ -171,7 +173,8 @@ export function Header() {
           <li className="pt-2">
             <a
               href="/#waitlist"
-              className="flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-4 py-3 text-sm font-semibold text-white"
+              className="btn-cta flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold"
+              style={ctaDelayStyle('header_mobile')}
               onClick={() => {
                 handleNav('waitlist')
                 analytics.track('cta_click', {

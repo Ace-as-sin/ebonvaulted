@@ -11,6 +11,7 @@ import {
   RECOVERY_TOPICS,
 } from '../content/security'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 
 export function SecurityPage() {
   useEffect(() => {
@@ -287,7 +288,8 @@ export function SecurityPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               to="/#waitlist"
-              className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-500/20 transition hover:brightness-110"
+              className="btn-cta inline-flex items-center justify-center rounded-xl px-6 py-3.5 text-sm font-semibold"
+              style={ctaDelayStyle('security')}
               onClick={() => {
                 analytics.track('cta_click', {
                   id: 'join_waitlist',

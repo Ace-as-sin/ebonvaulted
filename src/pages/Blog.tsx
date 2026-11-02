@@ -4,6 +4,7 @@ import { BlogCard } from '../components/BlogCard'
 import { BlogHero } from '../components/BlogHero'
 import { getPrimaryPost, getSecondaryPosts } from '../content/blog'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 
 export function Blog() {
   const primary = getPrimaryPost()
@@ -48,7 +49,8 @@ export function Blog() {
           </p>
           <Link
             to="/#waitlist"
-            className="mt-6 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-500/20 transition hover:brightness-110"
+            className="btn-cta mt-6 inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold"
+            style={ctaDelayStyle('blog')}
             onClick={() =>
               analytics.track('cta_click', {
                 id: 'join_waitlist',

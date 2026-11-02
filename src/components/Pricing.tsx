@@ -2,6 +2,7 @@ import { Check } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 import { formatCurrency } from '../lib/pricing'
 import { PRICING_CONFIG, PRICING_DISCLAIMER } from '../lib/pricingConfig'
 import { PRICING_PLANS } from '../lib/plans'
@@ -124,11 +125,8 @@ export function Pricing({
 
               <button
                 type="button"
-                className={`mt-8 w-full rounded-xl px-4 py-3 text-sm font-semibold transition ${
-                  plan.highlighted
-                    ? 'bg-gradient-to-r from-teal-500 to-blue-500 text-white shadow-lg shadow-teal-500/20 hover:brightness-110'
-                    : 'border border-line-strong bg-white/5 text-ink hover:border-teal-400/40 hover:bg-white/8'
-                }`}
+                className="btn-cta mt-8 w-full rounded-xl px-4 py-3 text-sm font-semibold"
+                style={ctaDelayStyle(plan.id)}
                 onClick={() => handleSelect(plan.id)}
               >
                 Join Waitlist

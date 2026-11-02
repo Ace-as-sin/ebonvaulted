@@ -36,8 +36,15 @@
 }
 
 @layer base {
+  :root {
+    /* Always use our dark palette — ignore OS light/dark flips for UA chrome. */
+    color-scheme: dark only;
+  }
+
   html {
     scroll-behavior: smooth;
+    color-scheme: dark only;
+    background-color: var(--color-navy-950);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -142,6 +149,64 @@
   }
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes cta-light-sweep {
+  0% {
+    background-position: 0% 45%;
+  }
+  100% {
+    background-position: 100% 55%;
+  }
+}
+
+/* Join Early Access / waitlist CTAs — keyboard-style light sweep */
+.btn-cta {
+  --cta-delay: 0s;
+  color: #fff;
+  /* Few wide stops = soft blend; alternate drift avoids loop snap */
+  background-image: linear-gradient(
+    118deg,
+    #0d9488,
+    #14b8a6,
+    #2dd4bf,
+    #3b82f6,
+    #2563eb
+  );
+  background-size: 280% 280%;
+  background-position: 0% 45%;
+  animation: cta-light-sweep 7.2s ease-in-out infinite alternate;
+  animation-delay: var(--cta-delay);
+  box-shadow: 0 8px 20px -6px rgba(20, 184, 166, 0.28);
+  transition:
+    box-shadow 0.35s ease,
+    filter 0.35s ease;
+}
+
+.btn-cta:hover {
+  box-shadow:
+    0 0 10px rgba(45, 212, 191, 0.35),
+    0 0 18px rgba(59, 130, 246, 0.18),
+    0 8px 20px -6px rgba(20, 184, 166, 0.28);
+  filter: brightness(1.04);
+}
+
+.btn-cta:disabled {
+  animation: none;
+  filter: none;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta {
+    animation: none;
+    background-image: linear-gradient(118deg, #14b8a6, #3b82f6);
+    background-size: 100% 100%;
+  }
+
+  .btn-cta:hover {
+    filter: brightness(1.06);
   }
 }
 

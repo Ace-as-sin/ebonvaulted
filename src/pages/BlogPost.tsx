@@ -18,6 +18,7 @@ import {
   getPostPath,
 } from '../content/blog'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 
 function ParagraphList({ paragraphs }: { paragraphs: string[] }) {
   return (
@@ -263,7 +264,8 @@ export function BlogPost() {
           </p>
           <Link
             to="/#waitlist"
-            className="mt-5 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
+            className="btn-cta mt-5 inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold"
+            style={ctaDelayStyle('blog-post')}
             onClick={() =>
               analytics.track('cta_click', {
                 id: 'join_waitlist',

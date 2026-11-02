@@ -2,6 +2,7 @@ import { ArrowRight, Shield } from 'lucide-react'
 import iconHeroSrc from '../assets/EbonVaultsIcon-hero.webp'
 import iconHeroLgSrc from '../assets/EbonVaultsIcon-hero-lg.webp'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 import { VaultIllustration } from './VaultIllustration'
 
 export function Hero() {
@@ -48,7 +49,8 @@ export function Hero() {
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
             <a
               href="#waitlist"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-500/25 transition hover:brightness-110 sm:w-auto"
+              className="btn-cta inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold sm:w-auto"
+              style={ctaDelayStyle('hero')}
               onClick={() =>
                 analytics.track('cta_click', {
                   id: 'join_early_access',

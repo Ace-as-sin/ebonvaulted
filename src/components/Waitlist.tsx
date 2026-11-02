@@ -2,6 +2,7 @@
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { analytics } from '../lib/analytics'
 import { INTENDED_USE_OPTIONS, PLAN_LABELS } from '../lib/plans'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 import { getWaitlistEndpoint, submitWaitlist, validateWaitlistForm } from '../lib/waitlist'
 import type { IntendedUse, StoragePlan, WaitlistFormData } from '../types'
 
@@ -305,7 +306,8 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-500/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="btn-cta inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-70"
+                  style={ctaDelayStyle('waitlist-submit')}
                 >
                   {status === 'loading' ? (
                     <>
