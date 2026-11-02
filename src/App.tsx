@@ -4,7 +4,9 @@ import { useHashScroll } from './hooks/useHashScroll'
 import { Blog } from './pages/Blog'
 import { BlogPost } from './pages/BlogPost'
 import { Home } from './pages/Home'
+import { PricingCalculatorPage } from './pages/PricingCalculatorPage'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
+import { ServerStatusPage } from './pages/ServerStatusPage'
 import { Terms } from './pages/Terms'
 
 function AppRoutes() {
@@ -14,6 +16,9 @@ function AppRoutes() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="pricing-calculator" element={<PricingCalculatorPage />} />
+        <Route path="server-status" element={<ServerStatusPage />} />
+        <Route path="status" element={<Navigate to="/server-status" replace />} />
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="privacy" element={<PrivacyPolicy />} />

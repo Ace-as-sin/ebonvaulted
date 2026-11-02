@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "ebon-vaults",
   "private": true,
   "version": "0.0.0",
@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "preview": "vite preview",
+    "server:start": "npm --prefix server start",
+    "server:dev": "npm --prefix server run dev"
   },
   "dependencies": {
     "lucide-react": "^1.63.0",
@@ -24,6 +28,7 @@
     "oxlint": "^1.89.0",
     "tailwindcss": "^4.3.3",
     "typescript": "~7.0.2",
-    "vite": "^8.3.5"
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
   }
 }

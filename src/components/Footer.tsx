@@ -17,6 +17,11 @@ export function Footer() {
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted">
             <li>
+              <Link to="/pricing-calculator" className="transition hover:text-ink">
+                Pricing Calculator
+              </Link>
+            </li>
+            <li>
               <Link to="/blog" className="transition hover:text-ink">
                 Blog
               </Link>

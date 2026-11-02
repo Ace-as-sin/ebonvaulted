@@ -31,13 +31,20 @@ export interface PricingPlan {
   id: StoragePlan
   name: string
   storage: string
+  /** Capacity in GB using 1 TB = 1,000 GB. */
+  storageGb: number
   price: string
+  /** Numeric monthly price in USD for calculations. */
+  monthlyPrice: number
   period: string
   description: string
   features: string[]
   highlighted?: boolean
   badge?: string
 }
+
+export type PricingModel = 'usage' | 'fixed'
+export type BillingPeriod = 'monthly' | 'annual'
 
 export type AnalyticsEventName =
   | 'page_view'
@@ -52,7 +59,10 @@ export type AnalyticsEventName =
 export interface AnalyticsEventMap {
   page_view: { path: string; referrer?: string }
   pricing_section_view: { once?: boolean }
-  pricing_plan_select: { plan: StoragePlan; source: 'pricing_card' | 'form' }
+  pricing_plan_select: {
+    plan: StoragePlan
+    source: 'pricing_card' | 'form' | 'calculator'
+  }
   waitlist_form_start: { plan?: StoragePlan }
   waitlist_submit_success: { plan: StoragePlan; intendedUse: IntendedUse }
   waitlist_submit_error: { plan: StoragePlan; code: string }

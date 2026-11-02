@@ -1,4 +1,6 @@
 ﻿User-agent: *
 Allow: /
+Disallow: /status
+Disallow: /server-status
 
 Sitemap: https://ebonvaults.com/sitemap.xml
