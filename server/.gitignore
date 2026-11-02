@@ -4,5 +4,6 @@
 data/
 backups/
 waitlist-export-*.csv
+cloudflared.yml
 node_modules/
 *.log
