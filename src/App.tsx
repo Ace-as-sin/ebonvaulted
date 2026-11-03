@@ -1,7 +1,19 @@
-import { lazy, Suspense } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom'
 import { Layout } from './components/Layout'
+import { TrackingConsentBanner } from './components/TrackingConsentBanner'
 import { useHashScroll } from './hooks/useHashScroll'
+import {
+  bindMetaConsentListener,
+  initMetaPixel,
+  trackPageView,
+} from './lib/metaPixel'
 import { Home } from './pages/Home'
 
 const PricingCalculatorPage = lazy(() =>
@@ -40,32 +52,51 @@ function RouteFallback() {
   )
 }
 
+function MetaPixelRouteTracker() {
+  const location = useLocation()
+
+  useEffect(() => {
+    initMetaPixel()
+    return bindMetaConsentListener()
+  }, [])
+
+  useEffect(() => {
+    trackPageView(location.pathname + location.search)
+  }, [location.pathname, location.search])
+
+  return null
+}
+
 function AppRoutes() {
   useHashScroll()
 
   return (
-    <Suspense fallback={<RouteFallback />}>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route
-            path="pricing-calculator"
-            element={<PricingCalculatorPage />}
-          />
-          <Route path="security" element={<SecurityPage />} />
-          <Route path="server-status" element={<ServerStatusPage />} />
-          <Route
-            path="status"
-            element={<Navigate to="/server-status" replace />}
-          />
-          <Route path="blog" element={<Blog />} />
-          <Route path="blog/:slug" element={<BlogPost />} />
-          <Route path="privacy" element={<PrivacyPolicy />} />
-          <Route path="terms" element={<Terms />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-      </Routes>
-    </Suspense>
+    <>
+      <MetaPixelRouteTracker />
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route
+              path="pricing-calculator"
+              element={<PricingCalculatorPage />}
+            />
+            <Route path="security" element={<SecurityPage />} />
+            <Route path="server-status" element={<ServerStatusPage />} />
+            <Route
+              path="status"
+              element={<Navigate to="/server-status" replace />}
+            />
+            <Route path="blog" element={<Blog />} />
+            <Route path="blog/:slug" element={<BlogPost />} />
+            <Route path="privacy" element={<PrivacyPolicy />} />
+            <Route path="terms" element={<Terms />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </Suspense>
+      <TrackingConsentBanner />
+    </>
   )
 }
 

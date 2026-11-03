@@ -57,6 +57,26 @@ export function validateWaitlistPayload(body) {
     return { ok: false, error: 'submittedAt must be a valid ISO timestamp.' }
   }
 
+  let metaEventId
+  if (body.metaEventId !== undefined && body.metaEventId !== null) {
+    if (typeof body.metaEventId !== 'string') {
+      return { ok: false, error: 'metaEventId must be a string.' }
+    }
+    const trimmed = body.metaEventId.trim()
+    if (trimmed.length > 128) {
+      return { ok: false, error: 'metaEventId is too long.' }
+    }
+    if (trimmed) metaEventId = trimmed
+  }
+
+  let trackingAllowed
+  if (body.trackingAllowed !== undefined && body.trackingAllowed !== null) {
+    if (typeof body.trackingAllowed !== 'boolean') {
+      return { ok: false, error: 'trackingAllowed must be a boolean.' }
+    }
+    trackingAllowed = body.trackingAllowed
+  }
+
   return {
     ok: true,
     value: {
@@ -67,6 +87,10 @@ export function validateWaitlistPayload(body) {
       source,
       submittedAt,
       receivedAt: new Date().toISOString(),
+    },
+    meta: {
+      metaEventId,
+      trackingAllowed,
     },
   }
 }

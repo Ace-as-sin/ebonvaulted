@@ -21,6 +21,10 @@ export interface WaitlistPayload {
   feedback?: string
   source?: string
   submittedAt: string
+  /** Shared browser/server id for Meta Pixel + Conversions API dedupe. */
+  metaEventId?: string
+  /** When false, server must not send Meta CAPI events. */
+  trackingAllowed?: boolean
 }
 
 export type WaitlistResult =

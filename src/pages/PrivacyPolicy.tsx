@@ -52,6 +52,13 @@ export function PrivacyPolicy() {
             configuration explicitly changes that practice and this policy is
             updated.
           </p>
+          <p className="mt-2">
+            If Meta Pixel / Conversions API is configured for advertising
+            measurement, we may send page-view and waitlist Lead events to Meta.
+            Those events do not include your email or form answers. You can
+            decline measurement cookies via the on-site banner; when declined,
+            we do not fire Pixel or Conversions API events.
+          </p>
         </section>
 
         <section>

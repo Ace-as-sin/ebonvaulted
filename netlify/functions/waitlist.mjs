@@ -1,4 +1,5 @@
 import { isDryRun, json, requireStatusToken } from './lib/http.mjs'
+import { sendMetaLead } from './lib/metaCapi.mjs'
 import { appendSignup, assertWritable } from './lib/store.mjs'
 import { validateWaitlistPayload } from './lib/validate.mjs'
 
@@ -40,6 +41,20 @@ export default async function handler(request) {
     }
 
     await appendSignup(validated.value)
+
+    // Fire-and-forget CAPI Lead with the same event id as the browser Pixel.
+    // Never block signup success on Meta API failures.
+    try {
+      await sendMetaLead({
+        request,
+        eventId: validated.meta?.metaEventId,
+        trackingAllowed: validated.meta?.trackingAllowed,
+        eventSourceUrl: validated.value.source,
+      })
+    } catch (err) {
+      console.error('[waitlist] meta capi error', err)
+    }
+
     return json({ ok: true })
   } catch (err) {
     console.error('[waitlist]', err)
