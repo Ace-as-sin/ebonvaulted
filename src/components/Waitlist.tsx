@@ -135,8 +135,9 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
               Be First Inside the Vault.
             </h2>
             <p className="mt-3 text-base text-muted">
-              Join the waitlist to share interest, help shape pricing, and get
-              launch-related updates. No payment is collected at this stage.
+              Join the waitlist to receive 5GB free on launch, help shape
+              pricing, and get launch-related updates. No payment is collected
+              at this stage.
             </p>
           </div>
 

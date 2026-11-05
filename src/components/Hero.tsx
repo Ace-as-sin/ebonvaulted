@@ -76,7 +76,8 @@ export function Hero() {
           </div>
 
           <p className="mt-6 text-sm text-subtle">
-            Prelaunch waitlist · Independent infrastructure in progress
+            Join the waitlist to receive 5GB free on launch · Independent
+            infrastructure in progress
           </p>
         </div>
 
