@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "ebon-vaults",
   "private": true,
   "version": "0.0.0",
@@ -7,9 +7,17 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "preview": "vite preview",
+    "server:start": "npm --prefix server start",
+    "server:dev": "npm --prefix server run dev"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource/outfit": "^5.3.0",
+    "@netlify/blobs": "^11.1.7",
+    "@netlify/functions": "^6.0.3",
     "lucide-react": "^1.63.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -24,6 +32,8 @@
     "oxlint": "^1.89.0",
     "tailwindcss": "^4.3.3",
     "typescript": "~7.0.2",
-    "vite": "^8.3.5"
+    "vite": "^8.3.5",
+    "vite-plugin-pwa": "^2.0.0",
+    "vitest": "^5.0.5"
   }
 }

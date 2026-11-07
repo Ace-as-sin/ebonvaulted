@@ -1,1 +1,4 @@
+/waitlist  /.netlify/functions/waitlist  200!
+/live      /.netlify/functions/live  200!
+/health    /.netlify/functions/health  200!
 /*    /index.html   200

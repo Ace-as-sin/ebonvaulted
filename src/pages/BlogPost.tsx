@@ -18,6 +18,7 @@ import {
   getPostPath,
 } from '../content/blog'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
 
 function ParagraphList({ paragraphs }: { paragraphs: string[] }) {
   return (
@@ -43,11 +44,31 @@ export function BlogPost() {
     if (!post) return
     analytics.pageView(getPostPath(post.slug))
     window.scrollTo(0, 0)
+    const previousTitle = document.title
+    document.title = `${post.title} · Ebon Vaults`
+    let meta = document.querySelector('meta[name="description"]')
+    const previousDescription = meta?.getAttribute('content') ?? null
+    if (post.seoDescription) {
+      if (!meta) {
+        meta = document.createElement('meta')
+        meta.setAttribute('name', 'description')
+        document.head.appendChild(meta)
+      }
+      meta.setAttribute('content', post.seoDescription)
+    }
+    return () => {
+      document.title = previousTitle
+      if (meta && previousDescription !== null) {
+        meta.setAttribute('content', previousDescription)
+      }
+    }
   }, [post])
 
   if (!post) {
     return <Navigate to="/blog" replace />
   }
+
+  const useSections = Boolean(post.sections?.length)
 
   const shareUrl =
     typeof window !== 'undefined'
@@ -117,61 +138,123 @@ export function BlogPost() {
       </header>
 
       <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
+        {post.editorNote && (
+          <p
+            className="mb-10 rounded-xl border border-line bg-navy-950/50 px-4 py-3 text-sm leading-relaxed text-subtle"
+            role="note"
+          >
+            {post.editorNote}
+          </p>
+        )}
+
         <div className="space-y-12">
-          <section aria-labelledby="what-happened-heading">
-            <h2
-              id="what-happened-heading"
-              className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl"
-            >
-              What was reported
-            </h2>
-            <div className="mt-4">
-              <ParagraphList paragraphs={post.whatHappened} />
-            </div>
-          </section>
+          {useSections
+            ? post.sections!.map((section, index) => (
+                <section
+                  key={section.id}
+                  aria-labelledby={`${section.id}-heading`}
+                  className={
+                    index === post.sections!.length - 2
+                      ? 'rounded-2xl border border-teal-400/25 bg-teal-500/5 p-6 sm:p-8'
+                      : index === 1
+                        ? 'rounded-2xl border border-line bg-charcoal-800/40 p-6 sm:p-8'
+                        : undefined
+                  }
+                >
+                  <h2
+                    id={`${section.id}-heading`}
+                    className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+                  >
+                    {section.heading}
+                  </h2>
+                  <div className="mt-4">
+                    <ParagraphList paragraphs={section.paragraphs} />
+                  </div>
+                </section>
+              ))
+            : (
+              <>
+                <section aria-labelledby="what-happened-heading">
+                  <h2
+                    id="what-happened-heading"
+                    className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+                  >
+                    What was reported
+                  </h2>
+                  <div className="mt-4">
+                    <ParagraphList paragraphs={post.whatHappened} />
+                  </div>
+                </section>
 
-          <section
-            aria-labelledby="why-it-matters-heading"
-            className="rounded-2xl border border-line bg-charcoal-800/40 p-6 sm:p-8"
-          >
-            <div className="flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-amber-400/10 text-amber-300 ring-1 ring-amber-400/20">
-                <Sparkles className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <h2
-                id="why-it-matters-heading"
-                className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl"
-              >
-                Why it matters for your data
-              </h2>
-            </div>
-            <div className="mt-5">
-              <ParagraphList paragraphs={post.whyItMatters} />
-            </div>
-          </section>
+                <section
+                  aria-labelledby="why-it-matters-heading"
+                  className="rounded-2xl border border-line bg-charcoal-800/40 p-6 sm:p-8"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-amber-400/10 text-amber-300 ring-1 ring-amber-400/20">
+                      <Sparkles className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <h2
+                      id="why-it-matters-heading"
+                      className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+                    >
+                      Why it matters for your data
+                    </h2>
+                  </div>
+                  <div className="mt-5">
+                    <ParagraphList paragraphs={post.whyItMatters} />
+                  </div>
+                </section>
 
-          <section
-            aria-labelledby="how-ebon-protects-heading"
-            className="rounded-2xl border border-teal-400/25 bg-teal-500/5 p-6 sm:p-8"
-          >
-            <div className="flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-teal-400/10 text-teal-400 ring-1 ring-teal-400/25">
-                <Shield className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <h2
-                id="how-ebon-protects-heading"
-                className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl"
-              >
-                How Ebon Vaults protects against that
-              </h2>
-            </div>
-            <div className="mt-5">
-              <ParagraphList paragraphs={post.howEbonVaultsProtects} />
-            </div>
-          </section>
+                <section
+                  aria-labelledby="how-ebon-protects-heading"
+                  className="rounded-2xl border border-teal-400/25 bg-teal-500/5 p-6 sm:p-8"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-teal-400/10 text-teal-400 ring-1 ring-teal-400/25">
+                      <Shield className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <h2
+                      id="how-ebon-protects-heading"
+                      className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+                    >
+                      How Ebon Vaults protects against that
+                    </h2>
+                  </div>
+                  <div className="mt-5">
+                    <ParagraphList paragraphs={post.howEbonVaultsProtects} />
+                  </div>
+                </section>
+              </>
+            )}
         </div>
 
-        <aside className="mt-14 rounded-2xl border border-teal-400/20 bg-gradient-to-r from-teal-500/10 via-transparent to-blue-500/10 px-6 py-6 sm:px-8">
+        {post.securityCta && (
+          <aside className="mt-14 rounded-2xl border border-blue-400/25 bg-blue-500/5 px-6 py-6 sm:px-8">
+            <h2 className="font-display text-lg font-semibold text-ink">
+              Dig into the architecture
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              See how we&apos;re designing Ebon Vaults around customer-controlled
+              encryption, independent infrastructure, and transparent privacy
+              commitments.
+            </p>
+            <Link
+              to="/security"
+              className="mt-5 inline-flex items-center justify-center rounded-xl border border-blue-400/40 bg-blue-500/10 px-5 py-2.5 text-sm font-semibold text-ink transition hover:border-blue-400/60 hover:bg-blue-500/15"
+              onClick={() =>
+                analytics.track('cta_click', {
+                  id: 'explore_security',
+                  location: 'blog_post',
+                })
+              }
+            >
+              Explore Our Security Architecture
+            </Link>
+          </aside>
+        )}
+
+        <aside className="mt-8 rounded-2xl border border-teal-400/20 bg-gradient-to-r from-teal-500/10 via-transparent to-blue-500/10 px-6 py-6 sm:px-8">
           <h2 className="font-display text-lg font-semibold text-ink">
             Want storage that stays storage?
           </h2>
@@ -181,7 +264,8 @@ export function BlogPost() {
           </p>
           <Link
             to="/#waitlist"
-            className="mt-5 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-navy-950 transition hover:brightness-110"
+            className="btn-cta mt-5 inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold"
+            style={ctaDelayStyle('blog-post')}
             onClick={() =>
               analytics.track('cta_click', {
                 id: 'join_waitlist',

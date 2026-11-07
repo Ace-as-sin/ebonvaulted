@@ -1,0 +1,14 @@
+{
+  "name": "ebon-vaults-waitlist-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Home-desktop waitlist receiver with token-gated health checks and dry-run signup tests",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

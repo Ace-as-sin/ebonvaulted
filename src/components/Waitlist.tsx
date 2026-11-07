@@ -1,7 +1,10 @@
 ﻿import { CheckCircle2, Loader2 } from 'lucide-react'
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { analytics } from '../lib/analytics'
+import { ctaDelayStyle } from '../lib/ctaDelay'
+import { createMetaEventId, trackLead } from '../lib/metaPixel'
 import { INTENDED_USE_OPTIONS, PLAN_LABELS } from '../lib/plans'
+import { isTrackingAllowed } from '../lib/trackingConsent'
 import { getWaitlistEndpoint, submitWaitlist, validateWaitlistForm } from '../lib/waitlist'
 import type { IntendedUse, StoragePlan, WaitlistFormData } from '../types'
 
@@ -81,7 +84,12 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
     setStatus('loading')
     setMessage('')
 
-    const result = await submitWaitlist(fullForm)
+    const trackingAllowed = isTrackingAllowed()
+    const metaEventId = trackingAllowed ? createMetaEventId() : undefined
+    const result = await submitWaitlist(fullForm, {
+      eventId: metaEventId,
+      trackingAllowed,
+    })
 
     submittingRef.current = false
 
@@ -90,6 +98,9 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
       setMessage(
         'You are on the list. We will email you with launch updates for the plan you selected.',
       )
+      if (metaEventId) {
+        trackLead(metaEventId)
+      }
       analytics.track('waitlist_submit_success', {
         plan: selectedPlan,
         intendedUse: form.intendedUse,
@@ -306,7 +317,8 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-6 py-3.5 text-sm font-semibold text-navy-950 shadow-lg shadow-teal-500/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="btn-cta inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-70"
+                  style={ctaDelayStyle('waitlist-submit')}
                 >
                   {status === 'loading' ? (
                     <>

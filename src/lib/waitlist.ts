@@ -40,6 +40,7 @@ export function validateWaitlistForm(
 
 export async function submitWaitlist(
   data: WaitlistFormData,
+  meta?: { eventId?: string; trackingAllowed?: boolean },
 ): Promise<WaitlistResult> {
   const endpoint = getWaitlistEndpoint()
 
@@ -68,6 +69,8 @@ export async function submitWaitlist(
     feedback: data.feedback.trim() || undefined,
     source: typeof window !== 'undefined' ? window.location.href : undefined,
     submittedAt: new Date().toISOString(),
+    metaEventId: meta?.eventId,
+    trackingAllowed: meta?.trackingAllowed,
   }
 
   try {

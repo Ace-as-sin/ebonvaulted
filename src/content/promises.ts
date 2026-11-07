@@ -7,8 +7,6 @@ export interface CustomerPromise {
   id: string
   headline: string
   body: string
-  /** Permanent non-negotiable commitment — visual emphasis */
-  emphasized?: boolean
   limitations?: string
 }
 
@@ -21,8 +19,7 @@ export const CUSTOMER_PROMISES: CustomerPromise[] = [
   {
     id: 'never-sold',
     headline: 'Your data will never be sold.',
-    body: 'We will never sell, rent, or license your files or their contents to advertisers, data brokers, or AI companies. Your files will never be used to train AI models. This is a non-negotiable company commitment.',
-    emphasized: true,
+    body: 'We will never sell, rent, or license your files or their contents to advertisers, data brokers, or AI companies. Your files will never be used to train AI models.',
   },
   {
     id: 'security',

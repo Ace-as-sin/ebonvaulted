@@ -11,6 +11,35 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
+server/data/
+server/.env
+server/.env.*
+!server/.env.example
+server/backups/
+server/waitlist-export-*.csv
+
+# Env / secrets (never commit keys)
+.env
+.env.*
+!.env.example
+server/.env
+server/.env.*
+!server/.env.example
+
+# Waitlist database, backups, CSV exports, local keys
+server/data/*.db
+server/data/*.db-*
+server/backups/
+server/exports/
+*.db
+*.db-shm
+*.db-wal
+**/secrets/
+**/ebonvaults-secrets/
+**/ebonvaults-data/
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +51,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Netlify folder
+.netlify
