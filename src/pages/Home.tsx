@@ -5,6 +5,7 @@ import { FAQ } from '../components/FAQ'
 import { Features } from '../components/Features'
 import { Hero } from '../components/Hero'
 import { Pricing } from '../components/Pricing'
+import { ValueStrip } from '../components/ValueStrip'
 import { Waitlist } from '../components/Waitlist'
 import { analytics } from '../lib/analytics'
 import { isStoragePlan } from '../lib/waitlistNav'
@@ -17,6 +18,8 @@ export function Home() {
     isStoragePlan(planFromUrl) ? planFromUrl : 'plus',
   )
   const [syncedPlanParam, setSyncedPlanParam] = useState(planFromUrl)
+  const [email, setEmail] = useState('')
+  const [joined, setJoined] = useState(false)
 
   if (planFromUrl !== syncedPlanParam) {
     setSyncedPlanParam(planFromUrl)
@@ -37,12 +40,23 @@ export function Home() {
 
   return (
     <>
-      <Hero />
-      <Pricing onSelectPlan={selectPlanAndScroll} />
+      <Hero
+        email={email}
+        onEmailChange={setEmail}
+        selectedPlan={selectedPlan}
+        joined={joined}
+        onJoined={() => setJoined(true)}
+      />
+      <ValueStrip />
       <Waitlist
         selectedPlan={selectedPlan}
         onPlanChange={setSelectedPlan}
+        email={email}
+        onEmailChange={setEmail}
+        joined={joined}
+        onJoined={() => setJoined(true)}
       />
+      <Pricing onSelectPlan={selectPlanAndScroll} />
       <Features />
       <About />
       <FAQ />

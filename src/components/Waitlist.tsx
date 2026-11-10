@@ -1,70 +1,77 @@
-﻿import { CheckCircle2, Loader2 } from 'lucide-react'
+﻿import { CheckCircle2, ChevronDown, Loader2 } from 'lucide-react'
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { analytics } from '../lib/analytics'
 import { ctaDelayStyle } from '../lib/ctaDelay'
 import { createMetaEventId, trackLead } from '../lib/metaPixel'
 import { INTENDED_USE_OPTIONS, PLAN_LABELS } from '../lib/plans'
 import { isTrackingAllowed } from '../lib/trackingConsent'
-import { getWaitlistEndpoint, submitWaitlist, validateWaitlistForm } from '../lib/waitlist'
+import {
+  getWaitlistEndpoint,
+  submitWaitlist,
+  validateWaitlistForm,
+} from '../lib/waitlist'
 import type { IntendedUse, StoragePlan, WaitlistFormData } from '../types'
 
 interface WaitlistProps {
   selectedPlan: StoragePlan
   onPlanChange: (plan: StoragePlan) => void
+  email: string
+  onEmailChange: (email: string) => void
+  joined: boolean
+  onJoined: () => void
 }
 
-const INITIAL: WaitlistFormData = {
-  email: '',
-  plan: 'plus',
-  intendedUse: 'personal',
-  feedback: '',
-  consent: false,
-}
-
-export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
+export function Waitlist({
+  selectedPlan,
+  onPlanChange,
+  email,
+  onEmailChange,
+  joined,
+  onJoined,
+}: WaitlistProps) {
   const formId = useId()
-  const [form, setForm] = useState<Omit<WaitlistFormData, 'plan'>>({
-    email: INITIAL.email,
-    intendedUse: INITIAL.intendedUse,
-    feedback: INITIAL.feedback,
-    consent: INITIAL.consent,
-  })
-  const [errors, setErrors] = useState<Partial<Record<keyof WaitlistFormData, string>>>({})
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [intendedUse, setIntendedUse] = useState<IntendedUse>('personal')
+  const [feedback, setFeedback] = useState('')
+  const [consent, setConsent] = useState(false)
+  const [detailsOpen, setDetailsOpen] = useState(false)
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof WaitlistFormData, string>>
+  >({})
+  const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')
   const [message, setMessage] = useState('')
   const submittingRef = useRef(false)
-  const emailRef = useRef<HTMLInputElement>(null)
 
-  const fullForm: WaitlistFormData = { ...form, plan: selectedPlan }
+  const fullForm: WaitlistFormData = {
+    email,
+    plan: selectedPlan,
+    intendedUse,
+    feedback,
+    consent,
+  }
 
-  const update = <K extends keyof Omit<WaitlistFormData, 'plan'>>(
-    key: K,
-    value: WaitlistFormData[K],
-  ) => {
-    analytics.waitlistFormStart(selectedPlan)
-    setForm((prev) => ({ ...prev, [key]: value }))
+  const clearFieldError = (key: keyof WaitlistFormData) => {
     setErrors((prev) => {
       if (!prev[key]) return prev
       const next = { ...prev }
       delete next[key]
       return next
     })
-    if (status === 'error') {
-      setStatus('idle')
-      setMessage('')
-    }
   }
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    if (submittingRef.current || status === 'success') return
+    if (submittingRef.current || joined) return
 
     const fieldErrors = validateWaitlistForm(fullForm)
     setErrors(fieldErrors)
     if (Object.keys(fieldErrors).length > 0) {
       const first = Object.keys(fieldErrors)[0]
-      const el = document.getElementById(`${formId}-${first}`)
-      el?.focus()
+      if (first === 'plan' || first === 'intendedUse' || first === 'feedback') {
+        setDetailsOpen(true)
+      }
+      window.setTimeout(() => {
+        document.getElementById(`${formId}-${first}`)?.focus()
+      }, 0)
       return
     }
 
@@ -94,17 +101,13 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
     submittingRef.current = false
 
     if (result.ok) {
-      setStatus('success')
-      setMessage(
-        'You are on the list. We will email you with launch updates for the plan you selected.',
-      )
-      if (metaEventId) {
-        trackLead(metaEventId)
-      }
+      setStatus('idle')
+      if (metaEventId) trackLead(metaEventId)
       analytics.track('waitlist_submit_success', {
         plan: selectedPlan,
-        intendedUse: form.intendedUse,
+        intendedUse,
       })
+      onJoined()
       return
     }
 
@@ -142,7 +145,7 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
           </div>
 
           <div className="px-6 py-8 sm:px-10 sm:py-10">
-            {status === 'success' ? (
+            {joined ? (
               <div
                 className="flex flex-col items-center gap-4 py-8 text-center"
                 role="status"
@@ -155,7 +158,8 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                   You are on the waitlist
                 </h3>
                 <p className="max-w-md text-sm leading-relaxed text-muted">
-                  {message}
+                  We will email you with launch updates for the plan you
+                  selected.
                 </p>
               </div>
             ) : (
@@ -172,14 +176,21 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                     Email address <span className="text-teal-400">*</span>
                   </label>
                   <input
-                    ref={emailRef}
                     id={`${formId}-email`}
                     name="email"
                     type="email"
                     autoComplete="email"
                     required
-                    value={form.email}
-                    onChange={(e) => update('email', e.target.value)}
+                    value={email}
+                    onChange={(e) => {
+                      analytics.waitlistFormStart(selectedPlan)
+                      onEmailChange(e.target.value)
+                      clearFieldError('email')
+                      if (status === 'error') {
+                        setStatus('idle')
+                        setMessage('')
+                      }
+                    }}
                     onFocus={() => analytics.waitlistFormStart(selectedPlan)}
                     aria-invalid={Boolean(errors.email)}
                     aria-describedby={
@@ -200,78 +211,126 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor={`${formId}-plan`}
-                    className="block text-sm font-medium text-ink"
+                  <button
+                    type="button"
+                    id={`${formId}-details-toggle`}
+                    aria-expanded={detailsOpen}
+                    aria-controls={`${formId}-details`}
+                    onClick={() => setDetailsOpen((v) => !v)}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition hover:text-teal-400"
                   >
-                    Preferred storage plan <span className="text-teal-400">*</span>
-                  </label>
-                  <select
-                    id={`${formId}-plan`}
-                    name="plan"
-                    value={selectedPlan}
-                    onChange={(e) => {
-                      const plan = e.target.value as StoragePlan
-                      analytics.waitlistFormStart(plan)
-                      onPlanChange(plan)
-                      analytics.track('pricing_plan_select', {
-                        plan,
-                        source: 'form',
-                      })
-                    }}
-                    onFocus={() => analytics.waitlistFormStart(selectedPlan)}
-                    className="mt-2 w-full rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
+                    Optional details
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-300 ${
+                        detailsOpen ? 'rotate-180' : ''
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <div
+                    id={`${formId}-details`}
+                    role="region"
+                    aria-labelledby={`${formId}-details-toggle`}
+                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                      detailsOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                    }`}
                   >
-                    {(Object.keys(PLAN_LABELS) as StoragePlan[]).map((id) => (
-                      <option key={id} value={id}>
-                        {PLAN_LABELS[id]}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                    <div className="overflow-hidden">
+                      <div className="space-y-5 pt-4">
+                        <div>
+                          <label
+                            htmlFor={`${formId}-plan`}
+                            className="block text-sm font-medium text-ink"
+                          >
+                            Preferred storage plan
+                          </label>
+                          <select
+                            id={`${formId}-plan`}
+                            name="plan"
+                            value={selectedPlan}
+                            onChange={(e) => {
+                              const plan = e.target.value as StoragePlan
+                              analytics.waitlistFormStart(plan)
+                              onPlanChange(plan)
+                              analytics.track('pricing_plan_select', {
+                                plan,
+                                source: 'form',
+                              })
+                            }}
+                            onFocus={() =>
+                              analytics.waitlistFormStart(selectedPlan)
+                            }
+                            className="mt-2 w-full rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
+                          >
+                            {(Object.keys(PLAN_LABELS) as StoragePlan[]).map(
+                              (id) => (
+                                <option key={id} value={id}>
+                                  {PLAN_LABELS[id]}
+                                </option>
+                              ),
+                            )}
+                          </select>
+                        </div>
 
-                <div>
-                  <label
-                    htmlFor={`${formId}-intendedUse`}
-                    className="block text-sm font-medium text-ink"
-                  >
-                    Primary intended use <span className="text-teal-400">*</span>
-                  </label>
-                  <select
-                    id={`${formId}-intendedUse`}
-                    name="intendedUse"
-                    value={form.intendedUse}
-                    onChange={(e) =>
-                      update('intendedUse', e.target.value as IntendedUse)
-                    }
-                    className="mt-2 w-full rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
-                  >
-                    {INTENDED_USE_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                        <div>
+                          <label
+                            htmlFor={`${formId}-intendedUse`}
+                            className="block text-sm font-medium text-ink"
+                          >
+                            Primary intended use
+                          </label>
+                          <select
+                            id={`${formId}-intendedUse`}
+                            name="intendedUse"
+                            value={intendedUse}
+                            onChange={(e) => {
+                              analytics.waitlistFormStart(selectedPlan)
+                              setIntendedUse(e.target.value as IntendedUse)
+                              clearFieldError('intendedUse')
+                            }}
+                            className="mt-2 w-full rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
+                          >
+                            {INTENDED_USE_OPTIONS.map((opt) => (
+                              <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
 
-                <div>
-                  <label
-                    htmlFor={`${formId}-feedback`}
-                    className="block text-sm font-medium text-ink"
-                  >
-                    What matters most to you?{' '}
-                    <span className="font-normal text-subtle">(optional)</span>
-                  </label>
-                  <textarea
-                    id={`${formId}-feedback`}
-                    name="feedback"
-                    rows={3}
-                    maxLength={1000}
-                    value={form.feedback}
-                    onChange={(e) => update('feedback', e.target.value)}
-                    className="mt-2 w-full resize-y rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink placeholder:text-subtle transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
-                    placeholder="Privacy, price, storage size, sharing, mobile access…"
-                  />
+                        <div>
+                          <label
+                            htmlFor={`${formId}-feedback`}
+                            className="block text-sm font-medium text-ink"
+                          >
+                            What matters most to you?
+                          </label>
+                          <textarea
+                            id={`${formId}-feedback`}
+                            name="feedback"
+                            rows={3}
+                            maxLength={1000}
+                            value={feedback}
+                            onChange={(e) => {
+                              analytics.waitlistFormStart(selectedPlan)
+                              setFeedback(e.target.value)
+                              clearFieldError('feedback')
+                            }}
+                            className="mt-2 w-full resize-y rounded-xl border border-line bg-navy-950/60 px-4 py-3 text-sm text-ink placeholder:text-subtle transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
+                            placeholder="Privacy, price, storage size, sharing, mobile access…"
+                          />
+                          {errors.feedback && (
+                            <p
+                              className="mt-1.5 text-sm text-red-400"
+                              role="alert"
+                            >
+                              {errors.feedback}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div>
@@ -280,8 +339,12 @@ export function Waitlist({ selectedPlan, onPlanChange }: WaitlistProps) {
                       id={`${formId}-consent`}
                       name="consent"
                       type="checkbox"
-                      checked={form.consent}
-                      onChange={(e) => update('consent', e.target.checked)}
+                      checked={consent}
+                      onChange={(e) => {
+                        analytics.waitlistFormStart(selectedPlan)
+                        setConsent(e.target.checked)
+                        clearFieldError('consent')
+                      }}
                       aria-invalid={Boolean(errors.consent)}
                       aria-describedby={
                         errors.consent ? `${formId}-consent-error` : undefined
