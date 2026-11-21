@@ -1,6 +1,7 @@
 import { createServer } from 'node:http'
 import { requireStatusToken } from './auth.js'
 import { getConfig, loadEnvFile } from './env.js'
+import { sendMetaLead } from './metaCapi.js'
 import { clientIp, createRateLimiter } from './rateLimit.js'
 import { createStore } from './store.js'
 import { validateWaitlistPayload } from './validate.js'
@@ -73,7 +74,7 @@ function isDryRun(req) {
   return header === 'true' || header === '1'
 }
 
-/** Public liveness probe — no auth, no PII. Used by /server-status auto-checks. */
+/** Public liveness probe — no auth, no PII. */
 async function handleLive(_req, res) {
   sendJson(res, 200, {
     ok: true,
@@ -163,6 +164,19 @@ async function handleWaitlist(req, res) {
       error: 'Failed to persist signup.',
     })
     return
+  }
+
+  // Fire-and-forget CAPI Lead with the same event id as the browser Pixel.
+  // Never block signup success on Meta API failures.
+  try {
+    await sendMetaLead({
+      req,
+      eventId: validated.meta?.metaEventId,
+      trackingAllowed: validated.meta?.trackingAllowed,
+      eventSourceUrl: validated.value.source,
+    })
+  } catch (err) {
+    console.error('[waitlist] meta capi error', err)
   }
 
   sendJson(res, 200, { ok: true })

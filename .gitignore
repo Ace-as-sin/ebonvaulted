@@ -20,6 +20,7 @@ server/.env.*
 !server/.env.example
 server/backups/
 server/waitlist-export-*.csv
+waitlist-signups.jsonl
 
 # Env / secrets (never commit keys)
 .env

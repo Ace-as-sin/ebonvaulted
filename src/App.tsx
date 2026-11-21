@@ -24,11 +24,6 @@ const PricingCalculatorPage = lazy(() =>
 const SecurityPage = lazy(() =>
   import('./pages/SecurityPage').then((m) => ({ default: m.SecurityPage })),
 )
-const ServerStatusPage = lazy(() =>
-  import('./pages/ServerStatusPage').then((m) => ({
-    default: m.ServerStatusPage,
-  })),
-)
 const Blog = lazy(() =>
   import('./pages/Blog').then((m) => ({ default: m.Blog })),
 )
@@ -82,11 +77,6 @@ function AppRoutes() {
               element={<PricingCalculatorPage />}
             />
             <Route path="security" element={<SecurityPage />} />
-            <Route path="server-status" element={<ServerStatusPage />} />
-            <Route
-              path="status"
-              element={<Navigate to="/server-status" replace />}
-            />
             <Route path="blog" element={<Blog />} />
             <Route path="blog/:slug" element={<BlogPost />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
