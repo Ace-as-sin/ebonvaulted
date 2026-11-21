@@ -113,7 +113,14 @@ export function Header() {
           ))}
         </ul>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-2 md:flex">
+          <Link
+            to="/app/signin"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-white/5 hover:text-ink"
+            onClick={() => handleNav('signin')}
+          >
+            Sign in
+          </Link>
           <a
             href="/#waitlist"
             className="btn-cta inline-flex items-center rounded-xl px-4 py-2 text-sm font-semibold"
@@ -171,6 +178,13 @@ export function Header() {
             </li>
           ))}
           <li className="pt-2">
+            <Link
+              to="/app/signin"
+              className="mb-2 block rounded-lg px-3 py-3 text-base font-medium text-muted hover:bg-white/5 hover:text-ink"
+              onClick={() => handleNav('signin')}
+            >
+              Sign in
+            </Link>
             <a
               href="/#waitlist"
               className="btn-cta flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold"

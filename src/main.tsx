@@ -1,10 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { registerSW } from 'virtual:pwa-register'
 import App from './App.tsx'
 import './index.css'
 
-registerSW({ immediate: true })
+// Only register the service worker in production builds.
+// A leftover SW from `vite preview` / prior deploys can serve a stale shell
+// on localhost and show a blank page during `npm run dev`.
+if (import.meta.env.PROD) {
+  void import('virtual:pwa-register').then(({ registerSW }) => {
+    registerSW({ immediate: true })
+  })
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

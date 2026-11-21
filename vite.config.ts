@@ -64,6 +64,19 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    // Bind IPv4 + IPv6 so both http://127.0.0.1:5173 and http://localhost:5173 work.
+    host: true,
+    proxy: {
+      // Dev-only: Windows SSH tunnel to the Ubuntu Fastify API (127.0.0.1:8788).
+      // Production uses VITE_STORAGE_API_BASE (e.g. https://storage-api.ebonvaults.com).
+      '/api': {
+        target: 'http://127.0.0.1:8788',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],

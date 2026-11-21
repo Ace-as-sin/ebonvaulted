@@ -111,9 +111,43 @@ If the live check fails: desktop server down, tunnel down, wrong URL, or `CORS_O
 If detailed health fails with unauthorized: wrong access key.  
 If dry-run fails after health passes: waitlist route/path mismatch or server not updated.
 
+## Customer space storage portal
+
+Authenticated portal routes live under `/app` (sign-in, invite, dashboard). Files are encrypted in the browser before upload to the Ubuntu storage API — never stored on Netlify.
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_STORAGE_API_BASE` | Production API origin (`https://storage-api.ebonvaults.com`). Leave empty in DEV to use the Vite `/api` → `127.0.0.1:8788` proxy |
+| `VITE_STORAGE_USE_MOCKS` | `true` enables labeled mocks in **Vite DEV only** |
+
+Docs: [`docs/STORAGE_API.md`](docs/STORAGE_API.md), [`docs/ENCRYPTION.md`](docs/ENCRYPTION.md), [`docs/SECURITY_INTEGRATIONS.md`](docs/SECURITY_INTEGRATIONS.md).
+
+Local preview with mocks:
+
+```bash
+# in .env
+VITE_STORAGE_USE_MOCKS=true
+npm run dev
+# open http://localhost:5173/app/signin
+```
+
+## Export waitlist emails (Netlify Blobs)
+
+Production signups are stored in Netlify Blobs (`waitlist` / `signups.jsonl`). From the repo root (Netlify CLI logged in):
+
+```bash
+netlify blobs:get waitlist signups.jsonl
+```
+
+Save a local copy:
+
+```bash
+
+```
+
 ## Cloudflare Pages
 
-1. Connect this repository (or upload `dist/` after `npm run build`).
+1. Connenetlify blobs:get waitlist signups.jsonl --output waitlist-signups.jsonlct this repository (or upload `dist/` after `npm run build`).
 2. Build settings:
    - **Build command:** `npm run build`
    - **Build output directory:** `dist`

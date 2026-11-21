@@ -15,6 +15,9 @@ import {
   trackPageView,
 } from './lib/metaPixel'
 import { Home } from './pages/Home'
+import { AuthProvider } from './portal/auth/AuthProvider'
+import { RequireAuth } from './portal/auth/RequireAuth'
+import { PortalShell } from './portal/components/PortalShell'
 
 const PricingCalculatorPage = lazy(() =>
   import('./pages/PricingCalculatorPage').then((m) => ({
@@ -41,6 +44,17 @@ const PrivacyPolicy = lazy(() =>
 const Terms = lazy(() =>
   import('./pages/Terms').then((m) => ({ default: m.Terms })),
 )
+const SignInPage = lazy(() =>
+  import('./portal/pages/SignInPage').then((m) => ({ default: m.SignInPage })),
+)
+const InvitePage = lazy(() =>
+  import('./portal/pages/InvitePage').then((m) => ({ default: m.InvitePage })),
+)
+const DashboardPage = lazy(() =>
+  import('./portal/pages/DashboardPage').then((m) => ({
+    default: m.DashboardPage,
+  })),
+)
 
 function RouteFallback() {
   return (
@@ -52,15 +66,21 @@ function RouteFallback() {
   )
 }
 
+function isPortalPath(pathname: string) {
+  return pathname === '/app' || pathname.startsWith('/app/')
+}
+
 function MetaPixelRouteTracker() {
   const location = useLocation()
 
   useEffect(() => {
+    if (isPortalPath(location.pathname)) return
     initMetaPixel()
     return bindMetaConsentListener()
-  }, [])
+  }, [location.pathname])
 
   useEffect(() => {
+    if (isPortalPath(location.pathname)) return
     trackPageView(location.pathname + location.search)
   }, [location.pathname, location.search])
 
@@ -69,6 +89,8 @@ function MetaPixelRouteTracker() {
 
 function AppRoutes() {
   useHashScroll()
+  const location = useLocation()
+  const onPortal = isPortalPath(location.pathname)
 
   return (
     <>
@@ -91,11 +113,33 @@ function AppRoutes() {
             <Route path="blog/:slug" element={<BlogPost />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<Terms />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
+
+          <Route
+            path="app"
+            element={
+              <AuthProvider>
+                <PortalShell />
+              </AuthProvider>
+            }
+          >
+            <Route
+              index
+              element={
+                <RequireAuth>
+                  <DashboardPage />
+                </RequireAuth>
+              }
+            />
+            <Route path="signin" element={<SignInPage />} />
+            <Route path="invite" element={<InvitePage />} />
+            <Route path="*" element={<Navigate to="/app" replace />} />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
-      <TrackingConsentBanner />
+      {!onPortal && <TrackingConsentBanner />}
     </>
   )
 }
