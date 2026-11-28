@@ -59,6 +59,20 @@ Without `VITE_WAITLIST_ENDPOINT`, the form shows a clear development-mode messag
 
 `netlify.toml` rewrites `/waitlist`, `/live`, and `/health` to the Netlify functions.
 
+## Export waitlist signups (Netlify Blobs)
+
+Production signups are stored in Netlify Blobs (`waitlist` / `signups.jsonl`). From the repo root (Netlify CLI logged in):
+
+```bash
+netlify blobs:get waitlist signups.jsonl
+```
+
+Save a local copy:
+
+```bash
+netlify blobs:get waitlist signups.jsonl --output waitlist-signups.jsonl
+```
+
 ## Optional home desktop waitlist server
 
 The server lives in [`server/`](server/). It:
